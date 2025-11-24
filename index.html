@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProofLock | The Standard for Digital Certainty</title>
+    <style>
+        /* CYBER-UNIFORM 4.0: BRIGHTER & BOLDER */
+        :root {
+            --accent: #00D26A;
+            --text-main: #ffffff;
+            --text-muted: #dddddd; /* Lighter grey for readability */
+            --glass-bg: rgba(10, 10, 10, 0.85); /* Slightly more opaque */
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            /* LIGHTER BACKGROUND OVERLAY */
+            background: url('assets/vault-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Adjusted Overlay: 75% opacity instead of 85% so the vault pops more */
+        .overlay {
+            background-color: rgba(5, 5, 5, 0.75); 
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding: 100px 20px 60px 20px;
+        }
+
+        /* MASSSIVE BADGE (2X Size) */
+        .hero-badge {
+            width: 360px; /* Doubled from 180px */
+            margin-bottom: 50px;
+            border-radius: 50%;
+            box-shadow: 0 0 80px rgba(0, 210, 106, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* BRANDING */
+        .brand-name {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #ffffff, #cccccc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand-inc {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: #888;
+            vertical-align: top;
+            margin-left: 5px;
+            letter-spacing: 0;
+            -webkit-text-fill-color: #aaa;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 20px auto 50px auto;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+        
+        /* BUTTONS */
+        .btn-group { display: flex; justify-content: center; gap: 20px; margin-bottom: 80px; }
+        .btn {
+            padding: 18px 45px;
+            background-color: var(--accent);
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .btn:hover {
+            background-color: #00ff80;
+            box-shadow: 0 0 50px rgba(0, 210, 106, 0.5);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #fff;
+            color: white;
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* SALES PITCH SECTION (The 3 Pillars) */
+        .sales-pitch {
+            padding: 80px 0;
+            background: rgba(0,0,0,0.4);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sales-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        .sales-card {
+            text-align: left;
+            padding: 20px;
+        }
+        .sales-num {
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.1);
+            line-height: 1;
+            margin-bottom: -20px;
+            display: block;
+        }
+        .sales-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .sales-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* GHOST-LINK SECTION */
+        .architecture {
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .chip-icon {
+            width: 120px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* FOUNDER BIO SECTION */
+        .founder-section {
+            background: #080808;
+            padding: 100px 20px;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: center;
+        }
+        .bio-container {
+            max-width: 800px;
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        .bio-text {
+            flex: 1;
+        }
+        .bio-header {
+            color: var(--accent);
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+            font-size: 0.9rem;
+        }
+        .bio-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        .bio-desc {
+            color: #aaa;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        .bio-links a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+            margin-right: 20px;
+            font-weight: bold;
+            padding-bottom: 2px;
+        }
+        .bio-links a:hover { color: var(--accent); }
+
+        /* FOOTER */
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            background: #020202;
+        }
+
+        /* MOBILE */
+        @media (max-width: 800px) {
+            .brand-name { font-size: 3rem; }
+            .hero-badge { width: 250px; }
+            .bio-container { flex-direction: column; text-align: center; }
+            .btn { width: 100%; display: block; margin-bottom: 15px; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay">
+
+        <section class="hero container">
+            <img src="assets/security-badge.jpg" alt="Verified Security" class="hero-badge">
+            
+            <div class="brand-name">ProofLock<span class="brand-inc">(inc)</span></div>
+            
+            <p class="tagline">
+                The only mobile vault that decouples <strong>Identity</strong> from <strong>Content</strong>.<br>
+                Secure your digital life against the era of AI manipulation.
+            </p>
+            
+            <div class="btn-group">
+                <a href="#" class="btn">Download on App Store</a>
+                <a href="mailto:founder@prooflock.io" class="btn btn-outline">Enterprise Licensing</a>
+            </div>
+        </section>
+
+        <section class="sales-pitch">
+            <div class="container">
+                <div class="sales-grid">
+                    <div class="sales-card">
+                        <span class="sales-num">01</span>
+                        <span class="sales-title">Free Privacy Vault</span>
+                        <p class="sales-desc">
+                            Use <strong>CryptoLock™</strong> to encrypt your personal photos, journals, and documents with military-grade AES-256. Your keys never leave your device. Total privacy, zero cost.
+                        </p>
+                    </div>
+                    <div class="sales-card">
+                        <span class="sales-num">02</span>
+                        <span class="sales-title">Deepfake Defense</span>
+                        <p class="sales-desc">
+                            Use <strong>ProofLock™</strong> to mathematically notarize your media on the public blockchain. Prove exactly <em>what</em> happened and <em>when</em> it happened, immune to AI alteration.
+                        </p>
+                    </div>
+                    <div class="sales-card">
+                        <span class="sales-num">03</span>
+                        <span class="sales-title">Secure Courier</span>
+                        <p class="sales-desc">
+                            Turn ProofLock into a <strong>"WinZip for Secrets."</strong> Create password-protected encrypted packages (`.plzip`) to send private messages securely over any open channel.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="architecture">
+            <div class="container">
+                <img src="assets/chip_icon.png" alt="Ghost-Link Hardware" class="chip-icon">
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: white;">Powered by Ghost-Link™</h2>
+                <p style="max-width: 800px; margin: 0 auto; color: #ccc; font-size: 1.2rem; line-height: 1.7;">
+                    Our proprietary architecture generates Twin Keys at the moment of creation: one for the Blockchain, one for the User. 
+                    This allows you to share verified, tamper-proof assets without ever exposing your master private identity.
+                </p>
+            </div>
+        </section>
+
+        <section class="founder-section">
+            <div class="bio-container">
+                <div class="bio-text">
+                    <span class="bio-header">MEET THE ARCHITECT</span>
+                    <div class="bio-name">Paul Ensor</div>
+                    <p class="bio-desc">
+                        A 30-year veteran of Enterprise Security and Data Integrity, Paul engineered ProofLock to solve a critical flaw in modern digital media: <strong>The lack of verifiable truth.</strong>
+                        <br><br>
+                        "In a world where AI can fabricate reality, we need a mathematical shield to protect our history. ProofLock isn't just an app; it is the standard for Digital Certainty."
+                    </p>
+                    <div class="bio-links">
+                        <a href="https://www.linkedin.com/in/pauldensor" target="_blank">LinkedIn Profile</a>
+                        <a href="mailto:founder@prooflock.io">Email Founder</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div style="margin-bottom: 20px; color: #888;">
+                    © 2025 ProofLock Inc. All Rights Reserved.
+                </div>
+                <div style="font-size: 0.8rem; color: #444;">
+                    Patent Pending | US Serial No. [Insert Number]
+                </div>
+            </div>
+        </footer>
+
+    </div> </body>
+</html>
