@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProofLock | The Standard for Digital Certainty</title>
     <style>
-        /* CYBER-UNIFORM 4.0: BRIGHTER & BOLDER */
+        /* CYBER-UNIFORM 5.1: FINAL POLISH */
         :root {
             --accent: #00D26A;
             --text-main: #ffffff;
-            --text-muted: #dddddd; /* Lighter grey for readability */
-            --glass-bg: rgba(10, 10, 10, 0.85); /* Slightly more opaque */
+            --text-muted: #dddddd;
+            --glass-bg: rgba(10, 10, 10, 0.85);
             --glass-border: rgba(255, 255, 255, 0.15);
         }
         
@@ -19,12 +19,11 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
-            /* LIGHTER BACKGROUND OVERLAY */
+            /* BACKGROUND: Ensure 'assets/vault-bg.jpg' exists */
             background: url('assets/vault-bg.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 
-        /* Adjusted Overlay: 75% opacity instead of 85% so the vault pops more */
         .overlay {
             background-color: rgba(5, 5, 5, 0.75); 
             min-height: 100vh;
@@ -32,7 +31,7 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -43,12 +42,11 @@
             padding: 100px 20px 60px 20px;
         }
 
-        /* MASSSIVE BADGE (2X Size) */
         .hero-badge {
-            width: 360px; /* Doubled from 180px */
-            margin-bottom: 50px;
+            width: 360px;
+            margin-bottom: 40px;
             border-radius: 50%;
-            box-shadow: 0 0 80px rgba(0, 210, 106, 0.3);
+            box-shadow: 0 0 80px rgba(0, 210, 106, 0.35);
             animation: float 6s ease-in-out infinite;
         }
 
@@ -58,31 +56,33 @@
             100% { transform: translateY(0px); }
         }
 
-        /* BRANDING */
+        /* BRANDING UPDATE: ProofLock inc. */
         .brand-name {
             font-size: 4.5rem;
             font-weight: 900;
             letter-spacing: -2px;
             line-height: 1;
             margin-bottom: 15px;
-            text-transform: uppercase;
             background: linear-gradient(to bottom, #ffffff, #cccccc);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
+        /* The "inc." styling */
         .brand-inc {
-            font-size: 1.4rem;
+            font-size: 1.8rem; /* Smaller but visible */
             font-weight: 400;
             color: #888;
-            vertical-align: top;
-            margin-left: 5px;
+            margin-left: 8px;
             letter-spacing: 0;
             -webkit-text-fill-color: #aaa;
+            text-transform: lowercase; /* Keeps it "inc." */
+            font-variant: small-caps;  /* Optional classy touch */
         }
 
         .tagline {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--text-muted);
             max-width: 800px;
             margin: 20px auto 50px auto;
@@ -115,10 +115,10 @@
         }
         .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* SALES PITCH SECTION (The 3 Pillars) */
+        /* SALES PITCH */
         .sales-pitch {
             padding: 80px 0;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             border-top: 1px solid rgba(255,255,255,0.1);
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
@@ -132,12 +132,12 @@
             padding: 20px;
         }
         .sales-num {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 900;
             color: rgba(255, 255, 255, 0.1);
             line-height: 1;
-            margin-bottom: -20px;
             display: block;
+            margin-bottom: -25px;
         }
         .sales-title {
             font-size: 1.5rem;
@@ -145,6 +145,8 @@
             font-weight: bold;
             margin-bottom: 15px;
             display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .sales-desc {
             color: var(--text-muted);
@@ -152,18 +154,23 @@
             line-height: 1.6;
         }
 
-        /* GHOST-LINK SECTION */
+        /* ARCHITECTURE SECTION */
         .architecture {
             text-align: center;
-            padding: 100px 20px;
+            padding: 120px 20px;
         }
-        .chip-icon {
-            width: 120px;
-            margin-bottom: 30px;
-            opacity: 0.9;
+        
+        .diagram-large {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            margin-bottom: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 60px rgba(0, 210, 106, 0.2);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* FOUNDER BIO SECTION */
+        /* FOUNDER BIO */
         .founder-section {
             background: #080808;
             padding: 100px 20px;
@@ -177,9 +184,7 @@
             gap: 50px;
             align-items: center;
         }
-        .bio-text {
-            flex: 1;
-        }
+        .bio-text { flex: 1; }
         .bio-header {
             color: var(--accent);
             font-weight: bold;
@@ -193,22 +198,24 @@
             font-weight: bold;
             margin-bottom: 20px;
             line-height: 1.1;
+            color: white;
         }
         .bio-desc {
-            color: #aaa;
+            color: #bbb;
             font-size: 1.1rem;
-            line-height: 1.7;
+            line-height: 1.8;
             margin-bottom: 30px;
         }
         .bio-links a {
             color: white;
             text-decoration: none;
             border-bottom: 1px solid var(--accent);
-            margin-right: 20px;
+            margin-right: 25px;
             font-weight: bold;
             padding-bottom: 2px;
+            transition: 0.2s;
         }
-        .bio-links a:hover { color: var(--accent); }
+        .bio-links a:hover { color: var(--accent); border-bottom-color: transparent; }
 
         /* FOOTER */
         footer {
@@ -219,10 +226,9 @@
             background: #020202;
         }
 
-        /* MOBILE */
         @media (max-width: 800px) {
             .brand-name { font-size: 3rem; }
-            .hero-badge { width: 250px; }
+            .hero-badge { width: 260px; }
             .bio-container { flex-direction: column; text-align: center; }
             .btn { width: 100%; display: block; margin-bottom: 15px; }
             .btn-group { flex-direction: column; }
@@ -236,11 +242,13 @@
         <section class="hero container">
             <img src="assets/security-badge.jpg" alt="Verified Security" class="hero-badge">
             
-            <div class="brand-name">ProofLock<span class="brand-inc">(inc)</span></div>
+            <div>
+                <span class="brand-name">ProofLock</span><span class="brand-inc">inc.</span>
+            </div>
             
             <p class="tagline">
-                The only mobile vault that decouples <strong>Identity</strong> from <strong>Content</strong>.<br>
-                Secure your digital life against the era of AI manipulation.
+                The Standard for Digital Certainty.<br>
+                Immutable Chain of Custody. Zero-Knowledge Encryption.
             </p>
             
             <div class="btn-group">
@@ -270,7 +278,7 @@
                         <span class="sales-num">03</span>
                         <span class="sales-title">Secure Courier</span>
                         <p class="sales-desc">
-                            Turn ProofLock into a <strong>"WinZip for Secrets."</strong> Create password-protected encrypted packages (`.plzip`) to send private messages securely over any open channel.
+                            Turn ProofLock into a <strong>"WinZip for Secrets."</strong> Create password-protected packages (`.plzip`) to send private messages securely over any open channel (Email, Signal, AirDrop).
                         </p>
                     </div>
                 </div>
@@ -279,11 +287,13 @@
 
         <section class="architecture">
             <div class="container">
-                <img src="assets/chip_icon.png" alt="Ghost-Link Hardware" class="chip-icon">
+                <img src="assets/four_pillars_diagram.png" alt="Ghost-Link Architecture Diagram" class="diagram-large">
+                
                 <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: white;">Powered by Ghost-Link™</h2>
                 <p style="max-width: 800px; margin: 0 auto; color: #ccc; font-size: 1.2rem; line-height: 1.7;">
-                    Our proprietary architecture generates Twin Keys at the moment of creation: one for the Blockchain, one for the User. 
-                    This allows you to share verified, tamper-proof assets without ever exposing your master private identity.
+                    We decouple <strong>Identity</strong> from <strong>Content</strong>. 
+                    Unlike traditional encryption, our architecture allows you to share verified, tamper-proof assets 
+                    without ever exposing your master private identity.
                 </p>
             </div>
         </section>
