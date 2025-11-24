@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProofLock | The Standard for Digital Certainty</title>
     <style>
-        /* CYBER-UNIFORM 5.1: FINAL POLISH */
+        /* CYBER-UNIFORM 7.0: REFINED & COMPACT */
         :root {
             --accent: #00D26A;
             --text-main: #ffffff;
@@ -19,7 +19,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
-            /* BACKGROUND: Ensure 'assets/vault-bg.jpg' exists */
             background: url('assets/vault-bg.jpg') no-repeat center center fixed;
             background-size: cover;
         }
@@ -31,7 +30,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -56,7 +55,6 @@
             100% { transform: translateY(0px); }
         }
 
-        /* BRANDING UPDATE: ProofLock inc. */
         .brand-name {
             font-size: 4.5rem;
             font-weight: 900;
@@ -69,16 +67,15 @@
             -webkit-text-fill-color: transparent;
             display: inline-block;
         }
-        /* The "inc." styling */
         .brand-inc {
-            font-size: 1.8rem; /* Smaller but visible */
+            font-size: 1.8rem;
             font-weight: 400;
             color: #888;
             margin-left: 8px;
             letter-spacing: 0;
             -webkit-text-fill-color: #aaa;
-            text-transform: lowercase; /* Keeps it "inc." */
-            font-variant: small-caps;  /* Optional classy touch */
+            text-transform: lowercase;
+            font-variant: small-caps;
         }
 
         .tagline {
@@ -170,9 +167,89 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
+        /* HOW IT WORKS SECTION (COMPACT) */
+        .how-it-works {
+            background-color: #080808; 
+            padding: 80px 0; /* Reduced padding */
+            border-top: 1px solid #222;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem; /* Reduced from 3rem */
+            margin-bottom: 60px; /* Reduced from 80px */
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 40px; /* Reduced gap */
+            margin-bottom: 60px; /* Reduced margin */
+            max-width: 900px; /* Constrain width for tighter look */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .feature-row.reverse {
+            flex-direction: row-reverse;
+        }
+        .feature-text { flex: 1; }
+        .feature-img { 
+            flex: 1; 
+            display: flex;
+            justify-content: center;
+        }
+        .feature-img img {
+            width: 100%;
+            max-width: 400px; /* Constrain image size */
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 210, 106, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+        .feature-img img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(0, 210, 106, 0.2);
+        }
+        .feature-num-compact {
+            font-size: 2.5rem; /* Smaller Number */
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.05);
+            line-height: 1;
+            display: block;
+            margin-bottom: -5px;
+        }
+        .feature-text h3 {
+            font-size: 1.6rem; /* Smaller Header */
+            color: white;
+            margin-bottom: 8px;
+        }
+        .feature-hook {
+            color: var(--accent);
+            font-size: 1rem; /* Smaller Hook */
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-text ul {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-text li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent);
+            color: #ccc;
+            font-size: 0.95rem; /* Compact body text */
+            line-height: 1.5;
+        }
+
         /* FOUNDER BIO */
         .founder-section {
-            background: #080808;
+            background: #0a0a0a;
             padding: 100px 20px;
             border-top: 1px solid #222;
             display: flex;
@@ -229,6 +306,12 @@
         @media (max-width: 800px) {
             .brand-name { font-size: 3rem; }
             .hero-badge { width: 260px; }
+            .feature-row, .feature-row.reverse {
+                flex-direction: column-reverse;
+                text-align: left;
+                gap: 30px;
+            }
+            .feature-img img { width: 100%; max-width: 100%; }
             .bio-container { flex-direction: column; text-align: center; }
             .btn { width: 100%; display: block; margin-bottom: 15px; }
             .btn-group { flex-direction: column; }
@@ -295,6 +378,77 @@
                     Unlike traditional encryption, our architecture allows you to share verified, tamper-proof assets 
                     without ever exposing your master private identity.
                 </p>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How ProofLock Works</h2>
+                
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <span class="feature-num-compact">01</span>
+                        <h3>The Privacy Vault</h3>
+                        <p class="feature-hook">Keep your secrets secret.</p>
+                        <ul>
+                            <li>Select any file (Photo, Video, Doc).</li>
+                            <li>Tap <strong>CryptoLock</strong> (Grey Button).</li>
+                            <li>Your file is encrypted locally with AES-256. No cloud backups. No AI scanning. Only you hold the key.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-img">
+                        <img src="assets/guide_cryptolock.png" alt="CryptoLock Safe">
+                    </div>
+                </div>
+
+                <div class="feature-row reverse">
+                    <div class="feature-text">
+                        <span class="feature-num-compact">02</span>
+                        <h3>The Digital Notary</h3>
+                        <p class="feature-hook">Prove it is real. Forever.</p>
+                        <ul>
+                            <li>Select your evidence (Contract, Scoop, Accident Video).</li>
+                            <li>Tap <strong>ProofLock</strong> (Green Button).</li>
+                            <li>We generate a unique digital fingerprint and anchor it to the public blockchain. You now have mathematical proof of existence.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-img">
+                        <img src="assets/guide_prooflock.png" alt="ProofLock Fingerprint">
+                    </div>
+                </div>
+
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <span class="feature-num-compact">03</span>
+                        <h3>The Secure Courier</h3>
+                        <p class="feature-hook">WinZip for Secrets.</p>
+                        <ul>
+                            <li>Need to send a private file over insecure email?</li>
+                            <li>Use <strong>Secure Courier</strong> to wrap your file and key into a password-protected package (.plzip).</li>
+                            <li>Send it via WhatsApp, AirDrop, or Signal. It is dead weight to anyone without the password.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-img">
+                        <img src="assets/guide_courier.png" alt="Secure Courier Briefcase">
+                    </div>
+                </div>
+
+                <div class="feature-row reverse">
+                    <div class="feature-text">
+                        <span class="feature-num-compact">04</span>
+                        <h3>The Invisible Vault</h3>
+                        <p class="feature-hook">Air-Gapped Security.</p>
+                        <ul>
+                            <li>Entering a high-risk zone? Tap <strong>Log Out</strong>.</li>
+                            <li>This destroys the decryption keys in your phone's Secure Enclave.</li>
+                            <li>Your vault becomes mathematically inaccessible until you re-authorize via a separate device.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-img">
+                        <img src="assets/guide_invisible.png" alt="Invisible Vault Fortress">
+                    </div>
+                </div>
+
             </div>
         </section>
 
