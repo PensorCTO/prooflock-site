@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProofLock | The Standard for Digital Certainty</title>
     <style>
-        /* CYBER-UNIFORM 7.0: REFINED & COMPACT */
+        /* CYBER-UNIFORM 8.0: COMPACT & REFINED */
         :root {
             --accent: #00D26A;
             --text-main: #ffffff;
-            --text-muted: #dddddd;
+            --text-muted: #cccccc; /* Slightly brighter for readability on smaller text */
             --glass-bg: rgba(10, 10, 10, 0.85);
             --glass-border: rgba(255, 255, 255, 0.15);
         }
@@ -23,6 +23,7 @@
             background-size: cover;
         }
 
+        /* Overlay opacity 0.75 for visibility */
         .overlay {
             background-color: rgba(5, 5, 5, 0.75); 
             min-height: 100vh;
@@ -35,7 +36,7 @@
             padding: 20px;
         }
         
-        /* HERO SECTION */
+        /* --- HERO SECTION --- */
         .hero {
             text-align: center;
             padding: 100px 20px 60px 20px;
@@ -55,6 +56,7 @@
             100% { transform: translateY(0px); }
         }
 
+        /* BRANDING: ProofLock inc. */
         .brand-name {
             font-size: 4.5rem;
             font-weight: 900;
@@ -68,7 +70,7 @@
             display: inline-block;
         }
         .brand-inc {
-            font-size: 1.8rem;
+            font-size: 1.8rem; /* Smaller font */
             font-weight: 400;
             color: #888;
             margin-left: 8px;
@@ -112,7 +114,7 @@
         }
         .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* SALES PITCH */
+        /* --- SALES PITCH (3 Pillars) --- */
         .sales-pitch {
             padding: 80px 0;
             background: rgba(0,0,0,0.5);
@@ -151,10 +153,10 @@
             line-height: 1.6;
         }
 
-        /* ARCHITECTURE SECTION */
+        /* --- ARCHITECTURE SECTION --- */
         .architecture {
             text-align: center;
-            padding: 120px 20px;
+            padding: 100px 20px;
         }
         
         .diagram-large {
@@ -167,27 +169,29 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* HOW IT WORKS SECTION (COMPACT) */
+        /* --- HOW IT WORKS (COMPACT VERSION) --- */
         .how-it-works {
             background-color: #080808; 
-            padding: 80px 0; /* Reduced padding */
+            padding: 60px 0; /* Reduced vertical padding */
             border-top: 1px solid #222;
         }
         .section-title {
             text-align: center;
-            font-size: 2.5rem; /* Reduced from 3rem */
-            margin-bottom: 60px; /* Reduced from 80px */
+            font-size: 2.2rem; /* Reduced from 3rem */
+            margin-bottom: 50px;
             font-weight: 900;
             color: white;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
+        
+        /* Compact Feature Row */
         .feature-row {
             display: flex;
             align-items: center;
-            gap: 40px; /* Reduced gap */
-            margin-bottom: 60px; /* Reduced margin */
-            max-width: 900px; /* Constrain width for tighter look */
+            gap: 40px;
+            margin-bottom: 50px; /* Reduced margin */
+            max-width: 900px; /* Constrain width to keep it tight */
             margin-left: auto;
             margin-right: auto;
         }
@@ -195,6 +199,8 @@
             flex-direction: row-reverse;
         }
         .feature-text { flex: 1; }
+        
+        /* Compact Image Container */
         .feature-img { 
             flex: 1; 
             display: flex;
@@ -202,34 +208,36 @@
         }
         .feature-img img {
             width: 100%;
-            max-width: 400px; /* Constrain image size */
+            max-width: 350px; /* Forced smaller image size */
             border-radius: 12px;
-            box-shadow: 0 0 30px rgba(0, 210, 106, 0.1);
+            box-shadow: 0 0 20px rgba(0, 210, 106, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s;
         }
         .feature-img img:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 40px rgba(0, 210, 106, 0.2);
+            box-shadow: 0 0 30px rgba(0, 210, 106, 0.2);
         }
+
+        /* Compact Text Styles */
         .feature-num-compact {
-            font-size: 2.5rem; /* Smaller Number */
+            font-size: 2rem; /* Much smaller number */
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.08);
             line-height: 1;
             display: block;
             margin-bottom: -5px;
         }
         .feature-text h3 {
-            font-size: 1.6rem; /* Smaller Header */
+            font-size: 1.4rem; /* Smaller header */
             color: white;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         .feature-hook {
             color: var(--accent);
-            font-size: 1rem; /* Smaller Hook */
+            font-size: 0.95rem;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: block;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -237,20 +245,21 @@
         .feature-text ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
         .feature-text li {
-            margin-bottom: 10px;
-            padding-left: 15px;
+            margin-bottom: 8px;
+            padding-left: 12px;
             border-left: 2px solid var(--accent);
             color: #ccc;
-            font-size: 0.95rem; /* Compact body text */
-            line-height: 1.5;
+            font-size: 0.9rem; /* Compact body text */
+            line-height: 1.4;
         }
 
-        /* FOUNDER BIO */
+        /* --- FOUNDER BIO --- */
         .founder-section {
             background: #0a0a0a;
-            padding: 100px 20px;
+            padding: 80px 20px;
             border-top: 1px solid #222;
             display: flex;
             justify-content: center;
@@ -268,27 +277,28 @@
             letter-spacing: 2px;
             margin-bottom: 15px;
             display: block;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .bio-name {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.1;
             color: white;
         }
         .bio-desc {
             color: #bbb;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
         }
         .bio-links a {
             color: white;
             text-decoration: none;
             border-bottom: 1px solid var(--accent);
-            margin-right: 25px;
+            margin-right: 20px;
             font-weight: bold;
+            font-size: 0.9rem;
             padding-bottom: 2px;
             transition: 0.2s;
         }
@@ -296,9 +306,9 @@
 
         /* FOOTER */
         footer {
-            padding: 60px 0;
+            padding: 50px 0;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #666;
             background: #020202;
         }
@@ -359,9 +369,9 @@
                     </div>
                     <div class="sales-card">
                         <span class="sales-num">03</span>
-                        <span class="sales-title">Secure Courier</span>
+                        <span class="sales-title">Authenticated Transport</span>
                         <p class="sales-desc">
-                            Turn ProofLock into a <strong>"WinZip for Secrets."</strong> Create password-protected packages (`.plzip`) to send private messages securely over any open channel (Email, Signal, AirDrop).
+                            Beyond encryption. ProofLock creates <strong>Self-Verifying Containers</strong>. Send files that prove their own integrity and origin the moment they are opened.
                         </p>
                     </div>
                 </div>
@@ -420,12 +430,12 @@
                 <div class="feature-row">
                     <div class="feature-text">
                         <span class="feature-num-compact">03</span>
-                        <h3>The Secure Courier</h3>
-                        <p class="feature-hook">WinZip for Secrets.</p>
+                        <h3>Authenticated Transport</h3>
+                        <p class="feature-hook">The Pipe doesn't matter. The Package does.</p>
                         <ul>
-                            <li>Need to send a private file over insecure email?</li>
-                            <li>Use <strong>Secure Courier</strong> to wrap your file and key into a password-protected package (.plzip).</li>
-                            <li>Send it via WhatsApp, AirDrop, or Signal. It is dead weight to anyone without the password.</li>
+                            <li>Traditional tools secure the <em>transfer</em>. We secure the <em>asset</em>.</li>
+                            <li><strong>Wrap & Verify:</strong> The recipient automatically verifies the blockchain signature upon decryption.</li>
+                            <li><strong>Total Assurance:</strong> Mathematical proof that the file received is 100% identical to the file sent.</li>
                         </ul>
                     </div>
                     <div class="feature-img">
