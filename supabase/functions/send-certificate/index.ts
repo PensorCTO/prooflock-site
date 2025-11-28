@@ -1,6 +1,7 @@
 // Supabase Edge Function: send-certificate
 // This function sends a certificate email with decryption instructions
 
+// @ts-ignore - Deno runtime provides these types
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const htmlContent = `
@@ -82,11 +83,12 @@ const htmlContent = `
 </html>
 `
 
-serve(async (req) => {
+serve(async (req: Request) => {
   try {
     // Your function logic here
     // This is a template - implement your actual certificate sending logic
     
+    // @ts-ignore - Response is a global in Deno runtime
     return new Response(JSON.stringify({ 
       message: "Certificate email sent",
       htmlContent: htmlContent 
@@ -95,7 +97,9 @@ serve(async (req) => {
       status: 200,
     })
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    // @ts-ignore - Response is a global in Deno runtime
+    return new Response(JSON.stringify({ error: errorMessage }), {
       headers: { "Content-Type": "application/json" },
       status: 500,
     })
