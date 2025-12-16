@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProofLock Verification</title>
+    <style>
+        /* BASE THEME: Dark Mode / Vault Aesthetic */
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --accent-color: #00ff9d; /* Neon Green/Cyan */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border-color: #333;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* CONTAINER */
+        .verify-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: #888;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* INPUT FIELD */
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-family: monospace;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* BUTTON */
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* HOME LINK STYLES */
+        .home-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #666;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+        }
+
+        .home-link:hover {
+            color: var(--accent-color);
+            opacity: 1;
+        }
+
+        .home-link img {
+            width: 32px; /* Small version per request */
+            height: auto;
+            filter: grayscale(100%); /* Start grey to match text */
+            transition: filter 0.2s;
+        }
+
+        .home-link:hover img {
+            filter: grayscale(0%); /* Restore color on hover */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="verify-container">
+        <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
+        
+        <h1>Verify Certificate</h1>
+        <p>Enter your Proof Hash or Transaction ID to query the Polygon Ledger.</p>
+
+        <div class="search-box">
+            <input type="text" id="hashInput" placeholder="Paste TxID or File Hash...">
+        </div>
+
+        <button onclick="handleVerify()">Check Blockchain</button>
+
+        <a href="/" class="home-link">
+            <img src="assets/chip_icon.png" alt="ProofLock Home">
+            <span>Return to Home</span>
+        </a>
+    </div>
+
+    <script>
+        // LOGIC: Grab 'hash' from URL query parameters (e.g. prooflock.io/verify?hash=123)
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const hash = params.get('hash');
+            
+            if (hash) {
+                const input = document.getElementById('hashInput');
+                input.value = hash;
+            }
+        });
+
+        function handleVerify() {
+            const input = document.getElementById('hashInput').value;
+            if(!input) return;
+            
+            alert("Connecting to Polygon Node... (This feature is currently being deployed)");
+        }
+    </script>
+</body>
+</html>
