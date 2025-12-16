@@ -1,0 +1,52 @@
+--- PROJECT ROOT ---
+/Users/paulensor/projects/prooflock-site
+
+--- GIT STATUS ---
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .DS_Store
+	modified:   public/assets/.DS_Store
+	modified:   public/assets/four_pillars_diagram.png
+	modified:   public/index.html
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	gather_context.sh
+	prooflock_context.txt
+	public/assets/HowToPanel1.png
+	public/assets/HowToPanel2.png
+	public/assets/four_pillars_diagramback.png
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+--- FILE STRUCTURE ---
+.
+./prooflock_context.txt
+./wrangler.json
+./supabase
+./supabase/functions
+./supabase/functions/send-certificate
+./public
+./public/index.html
+./public/decrypt.html
+./public/assets
+./public/assets/four_pillars_diagramback.png
+./public/assets/security-badge.jpg
+./public/assets/vault-bg.jpg
+./public/assets/chip_icon.png
+./public/assets/background_art.jpg
+./public/assets/guide_invisible.png
+./public/assets/guide_cryptolock.png
+./public/assets/guide_prooflock.png
+./public/assets/HowToPanel1.png
+./public/assets/four_pillars_diagram.png
+./public/assets/HowToPanel2.png
+./public/assets/guide_courier.png
+./gather_context.sh
+
+--- CONFIGURATION FILES ---
+--- ENTRY POINTS ---
