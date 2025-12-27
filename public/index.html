@@ -8,19 +8,87 @@
         /* CYBER-UNIFORM 8.0: COMPACT & REFINED */
         :root {
             --accent: #00D26A;
+            --accent-rgb: 0, 210, 106;
             --text-main: #ffffff;
-            --text-muted: #cccccc; /* Slightly brighter for readability on smaller text */
+            --text-muted: #cccccc; /* Meets WCAG AA contrast standards on dark backgrounds */
             --glass-bg: rgba(10, 10, 10, 0.85);
             --glass-border: rgba(255, 255, 255, 0.15);
         }
         
         body {
             margin: 0;
+            padding-top: 80px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
             background: url('assets/vault-bg.jpg') no-repeat center center fixed;
             background-size: cover;
+        }
+
+        /* GLOBAL NAVIGATION */
+        .global-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: -1px;
+            margin-right: auto;
+        }
+
+        .nav-brand .brand-lock {
+            color: #00D26A;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #00D26A;
+        }
+
+        @media (max-width: 768px) {
+            .global-nav {
+                padding: 0 20px;
+            }
+            .nav-links {
+                gap: 15px;
+            }
+            .nav-links a {
+                font-size: 0.85rem;
+            }
         }
 
         /* Overlay opacity 0.75 for visibility */
@@ -46,8 +114,8 @@
             width: 360px;
             margin-bottom: 40px;
             border-radius: 50%;
-            box-shadow: 0 0 80px rgba(0, 210, 106, 0.35);
-            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 0 80px rgba(var(--accent-rgb), 0.35);
+            animation: float 8s ease-in-out infinite;
         }
 
         @keyframes float {
@@ -62,7 +130,7 @@
             font-weight: 900;
             letter-spacing: -2px;
             line-height: 1;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             background: linear-gradient(to bottom, #ffffff, #cccccc);
             -webkit-background-clip: text;
             background-clip: text;
@@ -84,7 +152,7 @@
             font-size: 1.6rem;
             color: var(--text-muted);
             max-width: 800px;
-            margin: 20px auto 50px auto;
+            margin: 10px auto 40px auto;
             font-weight: 300;
             line-height: 1.5;
         }
@@ -104,8 +172,8 @@
             transition: 0.2s;
         }
         .btn:hover {
-            background-color: #00ff80;
-            box-shadow: 0 0 50px rgba(0, 210, 106, 0.5);
+            background-color: #00E673;
+            box-shadow: 0 0 50px rgba(var(--accent-rgb), 0.5);
         }
         .btn-outline {
             background: transparent;
@@ -165,7 +233,7 @@
             height: auto;
             margin-bottom: 40px;
             border-radius: 16px;
-            box-shadow: 0 0 60px rgba(0, 210, 106, 0.2);
+            box-shadow: 0 0 60px rgba(var(--accent-rgb), 0.2);
             border: 1px solid rgba(255,255,255,0.1);
         }
 
@@ -208,18 +276,23 @@
             flex: 1; 
             display: flex;
             justify-content: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
         .feature-img img {
             width: 100%;
             max-width: 350px; /* Forced smaller image size */
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 210, 106, 0.1);
+            box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s;
         }
         .feature-img img:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(0, 210, 106, 0.2);
+            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.2);
         }
 
         /* Compact Text Styles */
@@ -307,20 +380,16 @@
         }
         .bio-links a:hover { color: var(--accent); border-bottom-color: transparent; }
 
-        /* FOOTER */
-        footer {
-            padding: 50px 0;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #666;
-            background: #020202;
+        /* Footer link hover states */
+        footer a:hover {
+            color: #00D26A !important;
         }
 
         @media (max-width: 800px) {
             .brand-name { font-size: 3rem; }
             .hero-badge { width: 260px; }
             .feature-row, .feature-row.reverse {
-                flex-direction: column-reverse;
+                flex-direction: column;
                 text-align: left;
                 gap: 30px;
             }
@@ -332,6 +401,16 @@
     </style>
 </head>
 <body>
+
+    <!-- Global Navigation -->
+    <nav class="global-nav">
+        <a href="index.html" class="nav-brand">Proof<span class="brand-lock">Lock</span></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="verify.html">Verify</a>
+            <a href="decrypt.html">Decrypt</a>
+        </div>
+    </nav>
 
     <div class="overlay">
 
@@ -358,9 +437,9 @@
                 <div class="sales-grid">
                     <div class="sales-card">
                         <span class="sales-num">01</span>
-                        <span class="sales-title">Free Privacy Vault</span>
+                        <span class="sales-title">Privacy Vault</span>
                         <p class="sales-desc">
-                            Use <strong>CryptoLock™</strong> to encrypt your personal photos, journals, and documents with military-grade AES-256. Your keys never leave your device. Total privacy, zero cost.
+                            Use <strong>CryptoLock™</strong> to encrypt your personal photos, journals, and documents with military-grade AES-256. Your keys never leave your device. Total privacy.
                         </p>
                     </div>
                     <div class="sales-card">
@@ -383,7 +462,7 @@
 
         <section class="architecture">
             <div class="container">
-                <img src="assets/four_pillars_diagram.png" alt="Ghost-Link Architecture Diagram" class="diagram-large">
+                <img src="assets/four_pillars_diagram.png" alt="Ghost-Link Architecture Diagram" class="diagram-large" loading="lazy">
                 
                 <h2 style="font-size: 26px; margin-bottom: 20px; color: white;">Powered by Ghost-Link™</h2>
                 <p style="max-width: 800px; margin: 0 auto; color: #ccc; font-size: 1.2rem; line-height: 1.7;">
@@ -410,7 +489,7 @@
                         </ul>
                     </div>
                     <div class="feature-img">
-                        <img src="assets/guide_cryptolock.png" alt="CryptoLock Safe">
+                        <img src="assets/guide_cryptolock.png" alt="CryptoLock Safe" loading="lazy">
                     </div>
                 </div>
 
@@ -426,7 +505,7 @@
                         </ul>
                     </div>
                     <div class="feature-img">
-                        <img src="assets/guide_prooflock.png" alt="ProofLock Fingerprint">
+                        <img src="assets/guide_prooflock.png" alt="ProofLock Fingerprint" loading="lazy">
                     </div>
                 </div>
 
@@ -442,7 +521,7 @@
                         </ul>
                     </div>
                     <div class="feature-img">
-                        <img src="assets/guide_courier.png" alt="Secure Courier Briefcase">
+                        <img src="assets/guide_courier.png" alt="Secure Courier Briefcase" loading="lazy">
                     </div>
                 </div>
 
@@ -458,7 +537,7 @@
                         </ul>
                     </div>
                     <div class="feature-img">
-                        <img src="assets/guide_invisible.png" alt="Invisible Vault Fortress">
+                        <img src="assets/guide_invisible.png" alt="Invisible Vault Fortress" loading="lazy">
                     </div>
                 </div>
 
@@ -483,19 +562,16 @@
             </div>
         </section>
 
-        <footer>
-            <div class="container">
-                <div style="margin-bottom: 20px; color: #888;">
-                    © 2025 ProofLock Inc. All Rights Reserved.
-                </div>
-                <div style="font-size: 0.8rem; color: #444;">
-                    Patent Pending | US Serial No. [Insert Number]
-                </div>
-                <p style="margin-top: 20px; font-size: 12px; border-top: 1px solid #333; padding-top: 10px;">
-                    <a href="decrypt.html" style="color: #00D26A; text-decoration: none; font-weight: bold;">
-                        Decrypt Instructions
-                    </a>
-                </p>
+        <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto;">
+            <div style="margin-bottom: 20px;">
+                <a href="index.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Home</a>
+                <a href="verify.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Verify Asset</a>
+                <a href="privacy.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
+                <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
+            </div>
+            <div style="color: #444; font-size: 12px;">
+                &copy; 2025 ProofLock Inc. Non-Custodial Security.<br>
+                Patent Pending.
             </div>
         </footer>
 

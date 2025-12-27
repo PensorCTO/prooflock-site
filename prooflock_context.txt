@@ -1,3 +1,6 @@
+--- MASTER CONTEXT REPORT ---
+Generated: Fri Dec 26 19:57:00 EST 2025
+
 --- PROJECT ROOT ---
 /Users/paulensor/projects/prooflock-site
 
@@ -8,45 +11,1092 @@ Your branch is up to date with 'origin/main'.
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-	modified:   .DS_Store
-	modified:   public/assets/.DS_Store
-	modified:   public/assets/four_pillars_diagram.png
-	modified:   public/index.html
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	gather_context.sh
-	prooflock_context.txt
-	public/assets/HowToPanel1.png
-	public/assets/HowToPanel2.png
-	public/assets/four_pillars_diagramback.png
+	modified:   gather_context.sh
+	modified:   prooflock_context.txt
 
 no changes added to commit (use "git add" and/or "git commit -a")
 
 --- FILE STRUCTURE ---
-.
+./gather_context.sh
 ./prooflock_context.txt
-./wrangler.json
-./supabase
-./supabase/functions
-./supabase/functions/send-certificate
-./public
-./public/index.html
-./public/decrypt.html
-./public/assets
+./public/assets/background_art.jpg
+./public/assets/chip_icon.png
+./public/assets/four_pillars_diagram.png
 ./public/assets/four_pillars_diagramback.png
+./public/assets/guide_courier.png
+./public/assets/guide_cryptolock.png
+./public/assets/guide_invisible.png
+./public/assets/guide_prooflock.png
+./public/assets/GuideToUnlockingCrypto.png
+./public/assets/GuideToUnlockingProof.png
+./public/assets/HowToPanel1.png
+./public/assets/HowToPanel2.png
 ./public/assets/security-badge.jpg
 ./public/assets/vault-bg.jpg
-./public/assets/chip_icon.png
-./public/assets/background_art.jpg
-./public/assets/guide_invisible.png
-./public/assets/guide_cryptolock.png
-./public/assets/guide_prooflock.png
-./public/assets/HowToPanel1.png
-./public/assets/four_pillars_diagram.png
-./public/assets/HowToPanel2.png
-./public/assets/guide_courier.png
-./gather_context.sh
+./public/decrypt.html
+./public/index.html
+./public/verify.html
+./supabase/functions/send-certificate/deno.json
+./supabase/functions/send-certificate/index.ts
+./supabase/functions/send-certificate/tsconfig.json
+./supabase/functions/send-certificate/types.d.ts
+./wrangler.json
 
---- CONFIGURATION FILES ---
---- ENTRY POINTS ---
+--- ASSET SIZES (MB/KB) ---
+total 62080
+-rw-r--r--@ 1 paulensor  staff   1.2M Nov 19 14:16 background_art.jpg
+-rw-------@ 1 paulensor  staff   4.5M Nov 18 16:41 chip_icon.png
+-rw-r--r--@ 1 paulensor  staff   1.1M Dec 14 06:54 four_pillars_diagram.png
+-rw-r--r--@ 1 paulensor  staff   5.7M Nov 24 08:08 four_pillars_diagramback.png
+-rw-r--r--@ 1 paulensor  staff   1.0M Nov 24 09:38 guide_courier.png
+-rw-r--r--@ 1 paulensor  staff   494K Nov 24 09:39 guide_cryptolock.png
+-rw-r--r--@ 1 paulensor  staff   1.1M Nov 24 09:38 guide_invisible.png
+-rw-r--r--@ 1 paulensor  staff   828K Nov 24 09:39 guide_prooflock.png
+-rw-r--r--@ 1 paulensor  staff   5.6M Dec 16 11:35 GuideToUnlockingCrypto.png
+-rw-r--r--@ 1 paulensor  staff   6.0M Dec 16 11:37 GuideToUnlockingProof.png
+-rw-r--r--@ 1 paulensor  staff   657K Dec 13 22:17 HowToPanel1.png
+-rw-r--r--@ 1 paulensor  staff   554K Dec 13 22:18 HowToPanel2.png
+-rw-r--r--@ 1 paulensor  staff   502K Nov 18 17:25 security-badge.jpg
+-rw-r--r--@ 1 paulensor  staff   1.2M Nov 19 14:16 vault-bg.jpg
+
+--------------------------------------------------
+[FILE]: wrangler.json
+--------------------------------------------------
+{
+  "name": "prooflock",
+  "compatibility_date": "2024-11-24",
+  "assets": {
+    "directory": "./public"
+  }
+}
+[END OF FILE: wrangler.json]
+
+--------------------------------------------------
+[FILE]: public/decrypt.html
+--------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypt Your Asset | ProofLock</title>
+    <style>
+        /* THEME: Dark Mode / Vault Aesthetic */
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #00ff9d; /* Neon Green */
+            --glass-bg: rgba(20, 20, 20, 0.8);
+            --border-color: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            /* Attempt to use the background art if available, fallback to dark color */
+            background-image: url('assets/background_art.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Overlay to darken background image for readability */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: -1;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            max-width: 600px;
+        }
+
+        .logo {
+            width: 60px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 157, 0.3));
+        }
+
+        h1 {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            color: #888;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* DUAL GUIDE CONTAINER */
+        .guides-container {
+            display: flex;
+            flex-direction: row; /* Side by side on desktop */
+            gap: 30px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        /* INDIVIDUAL GUIDE CARD */
+        .guide-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 10px;
+            flex: 1;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+        }
+
+        .guide-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+        }
+
+        /* FOOTER LINKS */
+        .footer-links {
+            margin-top: auto;
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%;
+            background: linear-gradient(to top, #000 0%, transparent 100%);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .app-btn {
+            background: var(--accent-color);
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            transition: opacity 0.2s;
+        }
+
+        .app-btn:hover {
+            opacity: 0.9;
+        }
+
+        .secondary-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 13px;
+        }
+
+        .secondary-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .secondary-links a:hover {
+            color: var(--text-color);
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .guides-container {
+                flex-direction: column; /* Stack vertically on mobile */
+                align-items: center;
+            }
+
+            .guide-card {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <header class="header">
+        <img src="assets/chip_icon.png" alt="ProofLock Logo" class="logo">
+        <h1>Secure Decryption Portal</h1>
+        <p class="subtitle">Identify the type of secure asset you have received below to view unlocking instructions.</p>
+    </header>
+
+    <div class="guides-container">
+        <div class="guide-card">
+            <img src="assets/GuideToUnlockingProof.png" alt="Guide to Unlocking ProofLock" class="guide-image">
+        </div>
+
+        <div class="guide-card">
+            <img src="assets/GuideToUnlockingCrypto.png" alt="Guide to Unlocking CryptoLock" class="guide-image">
+        </div>
+    </div>
+
+    <footer class="footer-links">
+        <div class="btn-group">
+            <a href="https://apps.apple.com/us/app/prooflock/id6736932134" class="app-btn">Download on App Store</a>
+            </div>
+
+        <div class="secondary-links">
+            <a href="/">Home</a>
+            <a href="/verify">Verify Asset</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+        </div>
+        <p style="margin-top: 20px; color: #444; font-size: 12px;">&copy; 2024 ProofLock Inc. Non-Custodial Security.</p>
+    </footer>
+
+</body>
+</html>
+[END OF FILE: public/decrypt.html]
+
+--------------------------------------------------
+[FILE]: public/index.html
+--------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProofLock | The Standard for Digital Certainty</title>
+    <style>
+        /* CYBER-UNIFORM 8.0: COMPACT & REFINED */
+        :root {
+            --accent: #00D26A;
+            --text-main: #ffffff;
+            --text-muted: #cccccc; /* Slightly brighter for readability on smaller text */
+            --glass-bg: rgba(10, 10, 10, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            background: url('assets/vault-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Overlay opacity 0.75 for visibility */
+        .overlay {
+            background-color: rgba(5, 5, 5, 0.75); 
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 100px 20px 60px 20px;
+        }
+
+        .hero-badge {
+            width: 360px;
+            margin-bottom: 40px;
+            border-radius: 50%;
+            box-shadow: 0 0 80px rgba(0, 210, 106, 0.35);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* BRANDING: ProofLock inc. */
+        .brand-name {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 15px;
+            background: linear-gradient(to bottom, #ffffff, #cccccc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .brand-inc {
+            font-size: 1.8rem; /* Smaller font */
+            font-weight: 400;
+            color: #888;
+            margin-left: 8px;
+            letter-spacing: 0;
+            -webkit-text-fill-color: #aaa;
+            text-transform: lowercase;
+            font-variant: small-caps;
+        }
+
+        .tagline {
+            font-size: 1.6rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 20px auto 50px auto;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+        
+        /* BUTTONS */
+        .btn-group { display: flex; justify-content: center; gap: 20px; margin-bottom: 80px; }
+        .btn {
+            padding: 18px 45px;
+            background-color: var(--accent);
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .btn:hover {
+            background-color: #00ff80;
+            box-shadow: 0 0 50px rgba(0, 210, 106, 0.5);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #fff;
+            color: white;
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* --- SALES PITCH (3 Pillars) --- */
+        .sales-pitch {
+            padding: 80px 0;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sales-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        .sales-card {
+            text-align: left;
+            padding: 20px;
+        }
+        .sales-num {
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.1);
+            line-height: 1;
+            display: block;
+            margin-bottom: -25px;
+        }
+        .sales-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .sales-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* --- ARCHITECTURE SECTION --- */
+        .architecture {
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .diagram-large {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            margin-bottom: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 60px rgba(0, 210, 106, 0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- HOW IT WORKS (COMPACT VERSION) --- */
+        .how-it-works {
+            background-color: #080808; 
+            padding: 60px 0; /* Reduced vertical padding */
+            border-top: 1px solid #222;
+        }
+        h2 {
+            font-size: 26px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 50px;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* Compact Feature Row */
+        .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 50px; /* Reduced margin */
+            max-width: 900px; /* Constrain width to keep it tight */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .feature-row.reverse {
+            flex-direction: row-reverse;
+        }
+        .feature-text { flex: 1; }
+        
+        /* Compact Image Container */
+        .feature-img { 
+            flex: 1; 
+            display: flex;
+            justify-content: center;
+        }
+        .feature-img img {
+            width: 100%;
+            max-width: 350px; /* Forced smaller image size */
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 210, 106, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+        .feature-img img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 210, 106, 0.2);
+        }
+
+        /* Compact Text Styles */
+        .feature-num-compact {
+            font-size: 2rem; /* Much smaller number */
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.08);
+            line-height: 1;
+            display: block;
+            margin-bottom: -5px;
+        }
+        .feature-text h3 {
+            font-size: 1.4rem; /* Smaller header */
+            color: white;
+            margin-bottom: 5px;
+        }
+        .feature-hook {
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-text ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .feature-text li {
+            margin-bottom: 8px;
+            padding-left: 12px;
+            border-left: 2px solid var(--accent);
+            color: #ccc;
+            font-size: 0.9rem; /* Compact body text */
+            line-height: 1.4;
+        }
+
+        /* --- FOUNDER BIO --- */
+        .founder-section {
+            background: #0a0a0a;
+            padding: 80px 20px;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: center;
+        }
+        .bio-container {
+            max-width: 800px;
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        .bio-text { flex: 1; }
+        .bio-header {
+            color: var(--accent);
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+            font-size: 0.85rem;
+        }
+        .bio-name {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.1;
+            color: white;
+        }
+        .bio-desc {
+            color: #bbb;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        .bio-links a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+            margin-right: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding-bottom: 2px;
+            transition: 0.2s;
+        }
+        .bio-links a:hover { color: var(--accent); border-bottom-color: transparent; }
+
+        /* FOOTER */
+        footer {
+            padding: 50px 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+            background: #020202;
+        }
+
+        @media (max-width: 800px) {
+            .brand-name { font-size: 3rem; }
+            .hero-badge { width: 260px; }
+            .feature-row, .feature-row.reverse {
+                flex-direction: column-reverse;
+                text-align: left;
+                gap: 30px;
+            }
+            .feature-img img { width: 100%; max-width: 100%; }
+            .bio-container { flex-direction: column; text-align: center; }
+            .btn { width: 100%; display: block; margin-bottom: 15px; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay">
+
+        <section class="hero container">
+            <img src="assets/security-badge.jpg" alt="Verified Security" class="hero-badge">
+            
+            <div>
+                <span class="brand-name">ProofLock</span><span class="brand-inc">inc.</span>
+            </div>
+            
+            <p class="tagline">
+                The Standard for Digital Certainty.<br>
+                Immutable Chain of Custody. Zero-Knowledge Encryption.
+            </p>
+            
+            <div class="btn-group">
+                <a href="#" class="btn">Download on App Store</a>
+                <a href="mailto:founder@prooflock.io" class="btn btn-outline">Enterprise Licensing</a>
+            </div>
+        </section>
+
+        <section class="sales-pitch">
+            <div class="container">
+                <div class="sales-grid">
+                    <div class="sales-card">
+                        <span class="sales-num">01</span>
+                        <span class="sales-title">Free Privacy Vault</span>
+                        <p class="sales-desc">
+                            Use <strong>CryptoLock™</strong> to encrypt your personal photos, journals, and documents with military-grade AES-256. Your keys never leave your device. Total privacy, zero cost.
+                        </p>
+                    </div>
+                    <div class="sales-card">
+                        <span class="sales-num">02</span>
+                        <span class="sales-title">Deepfake Defense</span>
+                        <p class="sales-desc">
+                            Use <strong>ProofLock™</strong> to mathematically notarize your media on the public blockchain. Prove exactly <em>what</em> happened and <em>when</em> it happened, immune to AI alteration.
+                        </p>
+                    </div>
+                    <div class="sales-card">
+                        <span class="sales-num">03</span>
+                        <span class="sales-title">Authenticated Transport</span>
+                        <p class="sales-desc">
+                            Beyond encryption. ProofLock creates <strong>Self-Verifying Containers</strong>. Send files that prove their own integrity and origin the moment they are opened.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="architecture">
+            <div class="container">
+                <img src="assets/four_pillars_diagram.png" alt="Ghost-Link Architecture Diagram" class="diagram-large">
+                
+                <h2 style="font-size: 26px; margin-bottom: 20px; color: white;">Powered by Ghost-Link™</h2>
+                <p style="max-width: 800px; margin: 0 auto; color: #ccc; font-size: 1.2rem; line-height: 1.7;">
+                    We decouple <strong>Identity</strong> from <strong>Content</strong>. 
+                    Unlike traditional encryption, our architecture allows you to share verified, tamper-proof assets 
+                    without ever exposing your master private identity.
+                </p>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How ProofLock Works</h2>
+                
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <span class="feature-num-compact">01</span>
+                        <h3>The Privacy Vault</h3>
+                        <p class="feature-hook">Keep your secrets secret.</p>
+                        <ul>
+                            <li>Select any file (Photo, Video, Doc).</li>
+                            <li>Tap <strong>CryptoLock</strong> (Grey Button).</li>
+                            <li>Your file is encrypted locally with AES-256. No cloud backups. No AI scanning. Only you hold the key.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-img">
+                        <img src="assets/guide_cryptolock.png" alt="CryptoLock Safe">
+                    </div>
+                </div>
+
+                <div class="feature-row reverse">
+                    <div class="feature-text">
+                        <span class="feature-num-compact">02</span>
+                        <h3>The Digital Notary</h3>
+                        <p class="feature-hook">Prove it is real. Forever.</p>
+                        <ul>
+                            <li>Select your evidence (Contract, Scoop, Accident Video).</li>
+                            <li>Tap <strong>ProofLock</strong> (Green Button).</li>
+                            <li>We generate a unique digital fingerprint and anchor it to the public blockchain. You now have mathematical proof of existence.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-img">
+                        <img src="assets/guide_prooflock.png" alt="ProofLock Fingerprint">
+                    </div>
+                </div>
+
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <span class="feature-num-compact">03</span>
+                        <h3>Authenticated Transport</h3>
+                        <p class="feature-hook">The Pipe doesn't matter. The Package does.</p>
+                        <ul>
+                            <li>Traditional tools secure the <em>transfer</em>. We secure the <em>asset</em>.</li>
+                            <li><strong>Wrap & Verify:</strong> The recipient automatically verifies the blockchain signature upon decryption.</li>
+                            <li><strong>Total Assurance:</strong> Mathematical proof that the file received is 100% identical to the file sent.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-img">
+                        <img src="assets/guide_courier.png" alt="Secure Courier Briefcase">
+                    </div>
+                </div>
+
+                <div class="feature-row reverse">
+                    <div class="feature-text">
+                        <span class="feature-num-compact">04</span>
+                        <h3>The Invisible Vault</h3>
+                        <p class="feature-hook">Air-Gapped Security.</p>
+                        <ul>
+                            <li>Entering a high-risk zone? Tap <strong>Log Out</strong>.</li>
+                            <li>This destroys the decryption keys in your phone's Secure Enclave.</li>
+                            <li>Your vault becomes mathematically inaccessible until you re-authorize via a separate device.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-img">
+                        <img src="assets/guide_invisible.png" alt="Invisible Vault Fortress">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="founder-section">
+            <div class="bio-container">
+                <div class="bio-text">
+                    <span class="bio-header">MEET THE ARCHITECT</span>
+                    <div class="bio-name">Paul D. Ensor</div>
+                    <p class="bio-desc">
+                        A 30-year veteran of Enterprise Security and Data Integrity, Paul engineered ProofLock to solve a critical flaw in modern digital media: <strong>The lack of verifiable truth.</strong>
+                        <br><br>
+                        "In a world where AI can fabricate reality, we need a mathematical shield to protect our history. ProofLock isn't just an app; it is the standard for Digital Certainty."
+                    </p>
+                    <div class="bio-links">
+                        <a href="https://www.linkedin.com/in/pauldensor" target="_blank">LinkedIn Profile</a>
+                        <a href="mailto:founder@prooflock.io">Email Founder</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div style="margin-bottom: 20px; color: #888;">
+                    © 2025 ProofLock Inc. All Rights Reserved.
+                </div>
+                <div style="font-size: 0.8rem; color: #444;">
+                    Patent Pending | US Serial No. [Insert Number]
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; border-top: 1px solid #333; padding-top: 10px;">
+                    <a href="decrypt.html" style="color: #00D26A; text-decoration: none; font-weight: bold;">
+                        Decrypt Instructions
+                    </a>
+                </p>
+            </div>
+        </footer>
+
+    </div> </body>
+</html>
+[END OF FILE: public/index.html]
+
+--------------------------------------------------
+[FILE]: public/verify.html
+--------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProofLock Verification</title>
+    <style>
+        /* BASE THEME: Dark Mode / Vault Aesthetic */
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --accent-color: #00ff9d; /* Neon Green/Cyan */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border-color: #333;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* CONTAINER */
+        .verify-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: #888;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* INPUT FIELD */
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-family: monospace;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* BUTTON */
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* HOME LINK STYLES */
+        .home-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #666;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+        }
+
+        .home-link:hover {
+            color: var(--accent-color);
+            opacity: 1;
+        }
+
+        .home-link img {
+            width: 32px; /* Small version per request */
+            height: auto;
+            filter: grayscale(100%); /* Start grey to match text */
+            transition: filter 0.2s;
+        }
+
+        .home-link:hover img {
+            filter: grayscale(0%); /* Restore color on hover */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="verify-container">
+        <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
+        
+        <h1>Verify Certificate</h1>
+        <p>Enter your Proof Hash or Transaction ID to query the Polygon Ledger.</p>
+
+        <div class="search-box">
+            <input type="text" id="hashInput" placeholder="Paste TxID or File Hash...">
+        </div>
+
+        <button onclick="handleVerify()">Check Blockchain</button>
+
+        <a href="/" class="home-link">
+            <img src="assets/chip_icon.png" alt="ProofLock Home">
+            <span>Return to Home</span>
+        </a>
+    </div>
+
+    <script>
+        // LOGIC: Grab 'hash' from URL query parameters (e.g. prooflock.io/verify?hash=123)
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const hash = params.get('hash');
+            
+            if (hash) {
+                const input = document.getElementById('hashInput');
+                input.value = hash;
+            }
+        });
+
+        function handleVerify() {
+            const input = document.getElementById('hashInput').value;
+            if(!input) return;
+            
+            alert("Connecting to Polygon Node... (This feature is currently being deployed)");
+        }
+    </script>
+</body>
+</html>
+[END OF FILE: public/verify.html]
+
+--------------------------------------------------
+[FILE]: supabase/functions/send-certificate/index.ts
+--------------------------------------------------
+// Supabase Edge Function: send-certificate
+// This function sends a certificate email with decryption instructions
+
+// @ts-ignore - Deno runtime provides these types
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+
+const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Certificate | ProofLock</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #1E1E1E;
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid #333;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        .logo span { color: #00D26A; }
+        h1 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #A0A0A0;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #00D26A;
+            color: black;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: background-color 0.2s;
+        }
+        .button:hover {
+            background-color: #00B85A;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #444;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Proof<span>Lock</span></div>
+        <h1>Your Secure Certificate</h1>
+        <p>You have received a secure certificate file. To view and decrypt this file, please use the authorized viewer.</p>
+        <p>Click the button below to download the viewer and access decryption instructions.</p>
+        <a href="https://prooflock.io/decrypt.html" class="button">DOWNLOAD VIEWER & DECRYPT</a>
+        <p style="font-size: 12px; color: #666;">If you have any questions, please contact the sender.</p>
+        <div class="footer">
+            &copy; 2025 ProofLock Inc. All Rights Reserved.
+        </div>
+    </div>
+</body>
+</html>
+`
+
+serve(async (req: Request) => {
+  try {
+    // Your function logic here
+    // This is a template - implement your actual certificate sending logic
+    
+    // @ts-ignore - Response is a global in Deno runtime
+    return new Response(JSON.stringify({ 
+      message: "Certificate email sent",
+      htmlContent: htmlContent 
+    }), {
+      headers: { "Content-Type": "application/json" },
+      status: 200,
+    })
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    // @ts-ignore - Response is a global in Deno runtime
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      headers: { "Content-Type": "application/json" },
+      status: 500,
+    })
+  }
+})
+
+
+[END OF FILE: supabase/functions/send-certificate/index.ts]
+
+--------------------------------------------------
+[FILE]: supabase/functions/send-certificate/types.d.ts
+--------------------------------------------------
+// Type declarations for Deno runtime globals
+type Request = globalThis.Request;
+type Response = globalThis.Response;
+
+declare module "https://deno.land/std@0.168.0/http/server.ts" {
+  export function serve(
+    handler: (req: Request) => Response | Promise<Response>
+  ): void;
+}
+
+
+[END OF FILE: supabase/functions/send-certificate/types.d.ts]
+

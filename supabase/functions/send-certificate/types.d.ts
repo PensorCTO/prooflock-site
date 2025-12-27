@@ -1,6 +1,5 @@
 // Type declarations for Deno runtime globals
-type Request = globalThis.Request;
-type Response = globalThis.Response;
+// Note: Request and Response are available as global values in Deno runtime
 
 declare module "https://deno.land/std@0.168.0/http/server.ts" {
   export function serve(

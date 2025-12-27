@@ -1,37 +1,92 @@
 #!/bin/bash
-OUTPUT="prooflock_context.txt"
-echo "generating context file at $OUTPUT..."
 
-echo "--- PROJECT ROOT ---" > $OUTPUT
-pwd >> $OUTPUT; echo "" >> $OUTPUT
+# ==========================================
+# MASTER CONTEXT GENERATOR
+# Role: Application Architect Utility
+# Purpose: Generate a complete state report of the codebase for AI auditing.
+# ==========================================
 
-echo "--- GIT STATUS ---" >> $OUTPUT
-git status >> $OUTPUT; echo "" >> $OUTPUT
+OUTPUT_FILE="prooflock_context.txt"
 
-echo "--- FILE STRUCTURE ---" >> $OUTPUT
-if command -v tree &> /dev/null; then
-    tree -I 'node_modules|dist|build|.git|.next|coverage' >> $OUTPUT
+# 1. Initialize and clean
+echo "--- MASTER CONTEXT REPORT ---" > "$OUTPUT_FILE"
+echo "Generated: $(date)" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+# Function to append file content with a visual delimiter
+append_file() {
+    local filepath="$1"
+    if [ -f "$filepath" ]; then
+        echo "Processing: $filepath"
+        echo "--------------------------------------------------" >> "$OUTPUT_FILE"
+        echo "[FILE]: $filepath" >> "$OUTPUT_FILE"
+        echo "--------------------------------------------------" >> "$OUTPUT_FILE"
+        cat "$filepath" >> "$OUTPUT_FILE"
+        echo "" >> "$OUTPUT_FILE"
+        echo "[END OF FILE: $filepath]" >> "$OUTPUT_FILE"
+        echo "" >> "$OUTPUT_FILE"
+    else
+        echo "Warning: File $filepath not found (skipping)."
+    fi
+}
+
+# 2. Project Root & Git Status
+echo "Gathering System Status..."
+echo "--- PROJECT ROOT ---" >> "$OUTPUT_FILE"
+pwd >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+echo "--- GIT STATUS ---" >> "$OUTPUT_FILE"
+git status >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+# 3. File Structure (Excluding noise)
+echo "Mapping File Structure..."
+echo "--- FILE STRUCTURE ---" >> "$OUTPUT_FILE"
+# Find all files, excluding .git, node_modules, and DS_Store
+find . -type f -not -path '*/.*' -not -path '*/node_modules/*' | sort >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+# 4. Asset Analysis (Crucial for Mobile/Performance Audit)
+echo "Analyzing Asset Weights..."
+echo "--- ASSET SIZES (MB/KB) ---" >> "$OUTPUT_FILE"
+# List file sizes in human readable format for assets folder
+if [ -d "public/assets" ]; then
+    ls -lh public/assets >> "$OUTPUT_FILE"
 else
-    find . -maxdepth 3 -not -path '*/.*' -not -path './node_modules*' -not -path './dist*' -not -path './build*' >> $OUTPUT
+    echo "No assets directory found." >> "$OUTPUT_FILE"
 fi
-echo "" >> $OUTPUT
+echo "" >> "$OUTPUT_FILE"
 
-echo "--- CONFIGURATION FILES ---" >> $OUTPUT
-for file in package.json tsconfig.json next.config.js vite.config.js webpack.config.js tailwind.config.js composer.json requirements.txt; do
-    if [ -f "$file" ]; then
-        echo "Found $file:" >> $OUTPUT
-        echo "--------------------------------" >> $OUTPUT
-        cat "$file" >> $OUTPUT
-        echo -e "\n--------------------------------\n" >> $OUTPUT
-    fi
+# 5. Configuration Files (The Backbone)
+echo "Capturing Configuration..."
+append_file "wrangler.json"
+append_file "package.json"
+append_file "tsconfig.json"
+append_file "supabase/config.toml" # If exists
+
+# 6. Frontend Source Code (The "Face")
+echo "Capturing Frontend Code..."
+# Loop through all HTML files in public
+for f in public/*.html; do
+    [ -e "$f" ] && append_file "$f"
 done
 
-echo "--- ENTRY POINTS ---" >> $OUTPUT
-for file in src/index.js src/main.js src/index.tsx src/main.tsx pages/index.js pages/index.tsx index.html app/page.tsx; do
-    if [ -f "$file" ]; then
-        echo "Found Entry File $file (First 50 lines):" >> $OUTPUT
-        echo "--------------------------------" >> $OUTPUT
-        head -n 50 "$file" >> $OUTPUT
-        echo -e "\n--------------------------------\n" >> $OUTPUT
-    fi
+# Loop through CSS/JS if they exist
+for f in public/*.css; do
+    [ -e "$f" ] && append_file "$f"
 done
+for f in public/*.js; do
+    [ -e "$f" ] && append_file "$f"
+done
+
+# 7. Backend Logic (The "Brain")
+echo "Capturing Backend Functions..."
+# Capture the main logic of the send-certificate function
+append_file "supabase/functions/send-certificate/index.ts"
+# Capture any other TS files in functions
+find supabase/functions -name "*.ts" -not -name "index.ts" | while read file; do
+    append_file "$file"
+done
+
+echo "Context generation complete. Data saved to $OUTPUT_FILE"
