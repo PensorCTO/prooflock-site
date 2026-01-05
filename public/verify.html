@@ -215,7 +215,6 @@
 </head>
 <body>
 
-    <!-- Global Navigation -->
     <nav class="global-nav">
         <a href="index.html" class="nav-brand">Proof<span class="brand-lock">Lock</span></a>
         <div class="nav-links">
@@ -282,67 +281,99 @@
 
     <script>
         // --- CONFIGURATION ---
-        // PUBLIC READ ONLY CLIENT
         const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlZnVkZXBwenJyc2lwd3pvcWNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI4MTUyNTQsImV4cCI6MjA3ODM5MTI1NH0.Lh5tQ5aEWb_7BSkJM_me9fRvBgahlBUqqslMXqgrtRQ';
-        
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Auto-fill from URL params
+        let supabase;
+
         document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('verifyBtn');
+
+            // 1. Safe Initialization Check
+            if (typeof window.supabase !== 'undefined') {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            } else {
+                console.error("CRITICAL: Supabase SDK failed to load from CDN.");
+                if (btn) {
+                    btn.innerText = "Connection Error (CDN)";
+                    btn.disabled = true;
+                    btn.style.background = "var(--fail-color)";
+                    alert("Error: The app could not connect to the database securely. Please disable ad-blockers or check your internet connection.");
+                }
+                return;
+            }
+
+            // 2. Auto-Fill & Auto-Trigger
             const params = new URLSearchParams(window.location.search);
             const hash = params.get('hash');
+            
             if (hash) {
-                document.getElementById('hashInput').value = hash;
+                const cleanHash = hash.trim();
+                const input = document.getElementById('hashInput');
+                if (input) input.value = cleanHash;
+                
+                // Trigger verification immediately
+                handleVerify(cleanHash);
             }
         });
 
-        async function handleVerify() {
-            const hash = document.getElementById('hashInput').value.trim();
+        async function handleVerify(inputHash = null) {
+            const input = document.getElementById('hashInput');
             const btn = document.getElementById('verifyBtn');
             const resultArea = document.getElementById('result-area');
             
+            // Safety check for UI elements
+            if (!input || !btn || !resultArea) {
+                console.error("UI Elements missing from DOM");
+                return;
+            }
+
+            const hash = inputHash || input.value.trim();
             if(!hash) return;
 
             // UI Loading State
+            const originalText = btn.innerText;
             btn.innerText = "Scanning Ledger...";
             btn.disabled = true;
             resultArea.style.display = "none";
 
             try {
-                // SMART QUERY:
-                // Check if the input matches 'asset_hash' (PK) OR 'transaction_hash'
+                // SMART QUERY
                 const { data, error } = await supabase
                     .from('proof_ledger')
                     .select('asset_name, status, created_at, transaction_hash')
                     .or(`asset_hash.eq.${hash},transaction_hash.eq.${hash}`)
                     .single();
 
-                if (error || !data) {
-                    throw new Error("Record not found.");
-                }
+                if (error || !data) throw new Error("Record not found.");
 
-                // SUCCESS: Render Data
+                // SUCCESS RENDER
+                const txHash = data.transaction_hash || "Pending";
+                const shortTx = txHash.length > 20 ? txHash.substring(0, 16) + "..." : txHash;
+
                 document.getElementById('statusBadge').innerText = "VERIFIED VALID";
                 document.getElementById('statusBadge').style.background = "var(--success-color)";
-                
                 document.getElementById('resName').innerText = data.asset_name || "Confidential Asset";
                 document.getElementById('resTime').innerText = new Date(data.created_at).toLocaleString();
-                document.getElementById('resTx').innerText = data.transaction_hash || "Pending on Chain";
                 document.getElementById('resStatus').innerText = (data.status || "Verified").toUpperCase();
+
+                // LAYER 2 LINK
+                const txContainer = document.getElementById('resTx');
+                if (txHash !== "Pending" && txHash.startsWith("0x")) {
+                    txContainer.innerHTML = `<a href="https://polygonscan.com/tx/${txHash}" target="_blank" style="color:var(--accent-color); text-decoration:underline;">${shortTx} ↗</a>`;
+                } else {
+                    txContainer.innerText = txHash;
+                }
                 
                 resultArea.style.display = "block";
 
             } catch (err) {
-                // FAILURE: Show Error
-                console.error("Verification Error:", err);
-                
+                console.warn("Verification Failed:", err);
                 resultArea.style.display = "block";
                 document.getElementById('statusBadge').innerText = "VERIFICATION FAILED";
                 document.getElementById('statusBadge').style.background = "var(--fail-color)";
-                
                 document.getElementById('resName').innerText = "N/A";
-                document.getElementById('resTime').innerText = "Hash not found in ledger.";
+                document.getElementById('resTime').innerText = "Hash not found.";
                 document.getElementById('resTx').innerText = "--";
                 document.getElementById('resStatus').innerText = "INVALID";
             } finally {
