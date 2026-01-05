@@ -15,14 +15,24 @@
             --glass-border: rgba(255, 255, 255, 0.15);
         }
         
-        body {
+        html, body {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        body {
             padding-top: 80px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
             background: url('assets/vault-bg.jpg') no-repeat center center fixed;
             background-size: cover;
+        }
+        
+        * {
+            box-sizing: border-box;
         }
 
         /* GLOBAL NAVIGATION */
@@ -96,12 +106,18 @@
             background-color: rgba(5, 5, 5, 0.75); 
             min-height: 100vh;
             width: 100%;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
         }
         
         /* --- HERO SECTION --- */
@@ -112,7 +128,9 @@
 
         .hero-badge {
             width: 360px;
-            margin-bottom: 40px;
+            max-width: 100%;
+            margin: 0 auto 40px auto;
+            display: block;
             border-radius: 50%;
             box-shadow: 0 0 80px rgba(var(--accent-rgb), 0.35);
             animation: float 8s ease-in-out infinite;
@@ -188,14 +206,19 @@
             background: rgba(0,0,0,0.5);
             border-top: 1px solid rgba(255,255,255,0.1);
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            margin: 0;
+            display: block;
         }
         .sales-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
+            width: 100%;
+            box-sizing: border-box;
         }
         .sales-card {
-            text-align: left;
+            text-align: center;
             padding: 20px;
         }
         .sales-num {
@@ -225,13 +248,17 @@
         .architecture {
             text-align: center;
             padding: 100px 20px;
+            width: 100%;
+            margin: 0;
+            display: block;
         }
         
         .diagram-large {
             width: 100%;
             max-width: 1200px;
             height: auto;
-            margin-bottom: 40px;
+            margin: 0 auto 40px auto;
+            display: block;
             border-radius: 16px;
             box-shadow: 0 0 60px rgba(var(--accent-rgb), 0.2);
             border: 1px solid rgba(255,255,255,0.1);
@@ -242,6 +269,9 @@
             background-color: #080808; 
             padding: 60px 0; /* Reduced vertical padding */
             border-top: 1px solid #222;
+            width: 100%;
+            margin: 0;
+            display: block;
         }
         h2 {
             font-size: 26px;
@@ -261,15 +291,19 @@
             display: flex;
             align-items: center;
             gap: 40px;
-            margin-bottom: 50px; /* Reduced margin */
+            margin: 0 auto 50px auto; /* Reduced margin */
             max-width: 900px; /* Constrain width to keep it tight */
-            margin-left: auto;
-            margin-right: auto;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 20px;
         }
         .feature-row.reverse {
             flex-direction: row-reverse;
         }
-        .feature-text { flex: 1; }
+        .feature-text { 
+            flex: 1; 
+            text-align: center;
+        }
         
         /* Compact Image Container */
         .feature-img { 
@@ -322,14 +356,16 @@
             list-style: none;
             padding: 0;
             margin: 0;
+            text-align: center;
         }
         .feature-text li {
             margin-bottom: 8px;
-            padding-left: 12px;
-            border-left: 2px solid var(--accent);
+            padding: 0;
+            border: none;
             color: #ccc;
             font-size: 0.9rem; /* Compact body text */
-            line-height: 1.4;
+            line-height: 1.6;
+            text-align: center;
         }
 
         /* --- FOUNDER BIO --- */
@@ -339,6 +375,8 @@
             border-top: 1px solid #222;
             display: flex;
             justify-content: center;
+            width: 100%;
+            margin: 0;
         }
         .bio-container {
             max-width: 800px;
@@ -437,16 +475,16 @@
                 <div class="sales-grid">
                     <div class="sales-card">
                         <span class="sales-num">01</span>
-                        <span class="sales-title">Privacy Vault</span>
+                        <span class="sales-title">The Archive</span>
                         <p class="sales-desc">
-                            Use <strong>CryptoLock™</strong> to encrypt your personal photos, journals, and documents with military-grade AES-256. Your keys never leave your device. Total privacy.
+                            The application is your secure container. Assets are <strong>XOR encrypted</strong> for local privacy, ensuring your personal data remains obfuscated and offline.
                         </p>
                     </div>
                     <div class="sales-card">
                         <span class="sales-num">02</span>
                         <span class="sales-title">Deepfake Defense</span>
                         <p class="sales-desc">
-                            Use <strong>ProofLock™</strong> to mathematically notarize your media on the public blockchain. Prove exactly <em>what</em> happened and <em>when</em> it happened, immune to AI alteration.
+                            Use <strong>ProofLock™</strong> to mathematically notarize your media on the public blockchain with Forensic Standard verification. Prove exactly <em>what</em> happened and <em>when</em> it happened, immune to AI alteration.
                         </p>
                     </div>
                     <div class="sales-card">
@@ -462,11 +500,11 @@
 
         <section class="architecture">
             <div class="container">
-                <img src="assets/four_pillars_diagram.png" alt="Ghost-Link Architecture Diagram" class="diagram-large" loading="lazy">
+                <img src="assets/anatomy_2026.png" alt="ProofLock Core Architecture Diagram" class="diagram-large" loading="lazy">
                 
-                <h2 style="font-size: 26px; margin-bottom: 20px; color: white;">Powered by Ghost-Link™</h2>
+                <h2 style="font-size: 26px; margin-bottom: 20px; color: white;">Powered by ProofLock Core™</h2>
                 <p style="max-width: 800px; margin: 0 auto; color: #ccc; font-size: 1.2rem; line-height: 1.7;">
-                    We decouple <strong>Identity</strong> from <strong>Content</strong>. 
+                    Built on a <strong>Zero-Knowledge Core</strong>, we decouple <strong>Identity</strong> from <strong>Content</strong>. 
                     Unlike traditional encryption, our architecture allows you to share verified, tamper-proof assets 
                     without ever exposing your master private identity.
                 </p>
@@ -480,16 +518,14 @@
                 <div class="feature-row">
                     <div class="feature-text">
                         <span class="feature-num-compact">01</span>
-                        <h3>The Privacy Vault</h3>
+                        <h3>Secure Preservation</h3>
                         <p class="feature-hook">Keep your secrets secret.</p>
                         <ul>
-                            <li>Select any file (Photo, Video, Doc).</li>
-                            <li>Tap <strong>CryptoLock</strong> (Grey Button).</li>
-                            <li>Your file is encrypted locally with AES-256. No cloud backups. No AI scanning. Only you hold the key.</li>
+                            <li>Select any file. It is instantly secured using <strong>XOR privacy encoding</strong>. No cloud backups. No AI scanning. Your data stays on your device.</li>
                         </ul>
                     </div>
                     <div class="feature-img">
-                        <img src="assets/guide_cryptolock.png" alt="CryptoLock Safe" loading="lazy">
+                        <img src="assets/guide_cryptolock.png" alt="Secure Preservation" loading="lazy">
                     </div>
                 </div>
 
@@ -525,21 +561,6 @@
                     </div>
                 </div>
 
-                <div class="feature-row reverse">
-                    <div class="feature-text">
-                        <span class="feature-num-compact">04</span>
-                        <h3>The Invisible Vault</h3>
-                        <p class="feature-hook">Air-Gapped Security.</p>
-                        <ul>
-                            <li>Entering a high-risk zone? Tap <strong>Log Out</strong>.</li>
-                            <li>This destroys the decryption keys in your phone's Secure Enclave.</li>
-                            <li>Your vault becomes mathematically inaccessible until you re-authorize via a separate device.</li>
-                        </ul>
-                    </div>
-                    <div class="feature-img">
-                        <img src="assets/guide_invisible.png" alt="Invisible Vault Fortress" loading="lazy">
-                    </div>
-                </div>
 
             </div>
         </section>
@@ -570,7 +591,7 @@
                 <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
             </div>
             <div style="color: #444; font-size: 12px;">
-                &copy; 2025 ProofLock Inc. Non-Custodial Security.<br>
+                &copy; 2025 ProofLock LLC. Non-Custodial Security.<br>
                 Patent Pending.
             </div>
         </footer>

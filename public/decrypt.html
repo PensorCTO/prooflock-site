@@ -3,33 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decrypt Your Asset | ProofLock</title>
+    <title>Secure Asset Received | ProofLock Courier</title>
     <style>
-        /* THEME: Dark Mode / Vault Aesthetic */
+        /* CYBER-UNIFORM 8.0: COMPACT & REFINED - COURIER BLUE VARIANT */
         :root {
-            --bg-color: #050505;
-            --text-color: #e0e0e0;
-            --accent-color: #00ff9d; /* Neon Green */
-            --glass-bg: rgba(20, 20, 20, 0.8);
-            --border-color: #333;
+            --accent: #00a8ff; /* Courier Blue */
+            --accent-rgb: 0, 168, 255;
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
+            --glass-bg: rgba(10, 10, 10, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.15);
         }
-
-        body {
+        
+        html, body {
             margin: 0;
             padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        body {
             padding-top: 80px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            /* Attempt to use the background art if available, fallback to dark color */
-            background-image: url('assets/background_art.jpg');
+            color: var(--text-main);
+            overflow-x: hidden;
+            background: url('assets/vault-bg.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        }
+        
+        * {
+            box-sizing: border-box;
         }
 
         /* GLOBAL NAVIGATION */
@@ -98,101 +101,268 @@
             }
         }
 
-        /* Overlay to darken background image for readability */
+        /* Overlay */
         .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+            background-color: rgba(5, 5, 5, 0.75); 
+            min-height: 100vh;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: -1;
-        }
-
-        /* HEADER */
-        .header {
-            text-align: center;
-            padding: 30px 20px;
-            max-width: 600px;
-        }
-
-        .logo {
-            width: 60px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 8px rgba(0, 255, 157, 0.3));
-        }
-
-        h1 {
-            font-size: 28px;
-            margin: 0 0 10px 0;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        p.subtitle {
-            color: #888;
-            font-size: 16px;
-            line-height: 1.5;
             margin: 0;
-        }
-
-        /* DUAL GUIDE CONTAINER */
-        .guides-container {
-            display: flex;
-            flex-direction: row; /* Side by side on desktop */
-            gap: 30px;
-            padding: 20px;
-            width: 100%;
-            max-width: 1200px;
-            box-sizing: border-box;
-            justify-content: center;
-            align-items: flex-start;
-            margin-bottom: 40px;
-        }
-
-        /* INDIVIDUAL GUIDE CARD */
-        .guide-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 10px;
-            flex: 1;
-            max-width: 500px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            transition: transform 0.2s;
-        }
-
-        .guide-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent-color);
-        }
-
-        .guide-image {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
+            padding: 0;
             display: block;
         }
 
-        /* Footer link hover states */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 100px 20px 60px 20px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(var(--accent-rgb), 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* --- PITCH SECTION --- */
+        .pitch-section {
+            padding: 60px 0;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            margin: 0;
+            display: block;
+        }
+
+        .pitch-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .pitch-text {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        .pitch-text strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* --- INSTRUCTION CARDS --- */
+        .instructions-section {
+            padding: 80px 20px;
+            width: 100%;
+            margin: 0;
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .instruction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .instruction-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 60px rgba(var(--accent-rgb), 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .instruction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 80px rgba(var(--accent-rgb), 0.25);
+        }
+
+        .instruction-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .instruction-label {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* --- CALL TO ACTION --- */
+        .cta-section {
+            padding: 80px 20px;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            margin: 0;
+            display: block;
+        }
+
+        .cta-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 45px;
+            background-color: var(--accent);
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #33b8ff;
+            box-shadow: 0 0 50px rgba(var(--accent-rgb), 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #fff;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
         footer a:hover {
             color: #00D26A !important;
         }
 
-        /* MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
-            .guides-container {
-                flex-direction: column; /* Stack vertically on mobile */
-                align-items: center;
+            .hero-title {
+                font-size: 2.5rem;
             }
 
-            .guide-card {
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .pitch-text {
+                font-size: 1rem;
+            }
+
+            .instruction-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+
+            .btn {
                 width: 100%;
+                display: block;
+                margin-bottom: 15px;
             }
 
-            h1 {
-                font-size: 24px;
+            .btn-group {
+                flex-direction: column;
+                align-items: stretch;
             }
         }
     </style>
@@ -209,36 +379,75 @@
         </div>
     </nav>
 
-    <div class="overlay"></div>
+    <div class="overlay">
 
-    <header class="header">
-        <img src="assets/chip_icon.png" alt="ProofLock Logo" class="logo">
-        <h1>Secure Decryption Portal</h1>
-        <p class="subtitle">Identify the type of secure asset you have received below to view unlocking instructions.</p>
-    </header>
+        <!-- Hero Section -->
+        <section class="hero container">
+            <h1 class="hero-title">Secure Asset Received</h1>
+            <p class="hero-subtitle">
+                You have received a secured, forensic-grade asset protected by ProofLock Courier.
+            </p>
+        </section>
 
-    <div class="guides-container">
-        <div class="guide-card">
-            <img src="assets/GuideToUnlockingProof.png" alt="Guide to Unlocking ProofLock" class="guide-image">
-        </div>
+        <!-- Pitch Section -->
+        <section class="pitch-section">
+            <div class="pitch-content">
+                <p class="pitch-text">
+                    This file is locked with <strong>Identity-Decoupled Encryption</strong>. 
+                    To verify its chain of custody and decrypt it, you must use the <strong>ProofLock App</strong>. 
+                    This ensures <strong>Chain of Custody</strong>—mathematical proof that the file you receive is 
+                    identical to the file that was sent, with full auditability and tamper-proof verification.
+                </p>
+            </div>
+        </section>
 
-        <div class="guide-card">
-            <img src="assets/GuideToUnlockingCrypto.png" alt="Guide to Unlocking CryptoLock" class="guide-image">
-        </div>
+        <!-- Instructions Section -->
+        <section class="instructions-section">
+            <div class="container">
+                <h2 class="section-title">How to Open Your Secure Asset</h2>
+                <div class="instruction-grid">
+                    <div class="instruction-card">
+                        <img src="assets/GuideToUnlockingProof.png" alt="Guide to Unlocking Proof" loading="lazy">
+                        <div class="instruction-label">Verify & Decrypt</div>
+                    </div>
+                    <div class="instruction-card">
+                        <img src="assets/GuideToUnlockingCrypto.png" alt="Guide to Unlocking Crypto" loading="lazy">
+                        <div class="instruction-label">Secure Access</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2 class="cta-title">Get Started with ProofLock</h2>
+                <p class="cta-subtitle">
+                    Download the ProofLock App to unlock your secure asset and experience 
+                    forensic-grade digital certainty.
+                </p>
+                <div class="btn-group">
+                    <a href="#" class="btn">Download ProofLock</a>
+                    <a href="index.html" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div style="margin-bottom: 20px;">
+                <a href="index.html">Home</a>
+                <a href="verify.html">Verify Asset</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <div style="color: #444; font-size: 12px;">
+                &copy; 2025 ProofLock LLC. Non-Custodial Security.<br>
+                Patent Pending.
+            </div>
+        </footer>
+
     </div>
-
-    <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto;">
-        <div style="margin-bottom: 20px;">
-            <a href="index.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Home</a>
-            <a href="verify.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Verify Asset</a>
-            <a href="privacy.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
-            <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
-        </div>
-        <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock Inc. Non-Custodial Security.<br>
-            Patent Pending.
-        </div>
-    </footer>
 
 </body>
 </html>
