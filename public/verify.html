@@ -87,6 +87,7 @@
             <div class="status-row"><span style="color:#888; font-size:11px;">Asset Name</span><span class="value" id="resName">--</span></div>
             <div class="status-row"><span style="color:#888; font-size:11px;">Timestamp</span><span class="value" id="resTime">--</span></div>
             <div class="status-row"><span style="color:#888; font-size:11px;">Ledger TX</span><span class="value" id="resTx">--</span></div>
+            <div id="debug-msg" style="color:#666; font-size:10px; margin-top:10px; text-align:center;"></div>
         </div>
     </div>
 
@@ -97,7 +98,7 @@
         let supabaseClient;
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("ProofLock Verify v2.3 Loaded"); 
+            console.log("ProofLock Verify v2.4 Loaded"); 
             
             if (window.supabase) {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -114,6 +115,7 @@
             const input = document.getElementById('hashInput');
             const btn = document.getElementById('verifyBtn');
             const resultArea = document.getElementById('result-area');
+            const debugMsg = document.getElementById('debug-msg');
             
             const rawHash = passedHash || input.value;
             const hash = rawHash ? rawHash.trim().toLowerCase() : '';
@@ -122,33 +124,32 @@
             btn.innerText = "Scanning...";
             btn.disabled = true;
             resultArea.style.display = "none";
+            debugMsg.innerText = "";
 
             try {
-                console.log('[Verify] Hash:', hash);
-
-                // STRATEGY v2.3: Sequential Check
-                // This completely bypasses the .or() raw string parser issues.
-                // It uses standard .eq() which is type-safe and handles hashes starting with numbers automatically.
+                // STRATEGY v2.4: SPLIT QUERY PATTERN
+                // We do NOT use .or() because it crashes on numeric hashes.
+                // We fire two separate, simple bullets.
                 
-                // 1. Check Asset Hash first
-                let { data, error } = await supabaseClient
+                // Attempt 1: Search Asset Hash Column
+                console.log('[Verify] Attempt 1: Checking asset_hash for', hash);
+                let result = await supabaseClient
                     .from('proof_ledger')
                     .select('asset_name, created_at, transaction_hash')
-                    .eq('asset_hash', hash) // Safe method
+                    .eq('asset_hash', hash)
                     .maybeSingle();
 
-                // 2. If not found (and no error), check Transaction Hash
-                if (!data && !error) {
-                    console.log('[Verify] Asset Hash miss. Checking Transaction Hash...');
-                    const txResult = await supabaseClient
+                // Attempt 2: If missed, search Transaction Hash Column
+                if (!result.data && !result.error) {
+                    console.log('[Verify] Attempt 2: Checking transaction_hash for', hash);
+                    result = await supabaseClient
                         .from('proof_ledger')
                         .select('asset_name, created_at, transaction_hash')
-                        .eq('transaction_hash', hash) // Safe method
+                        .eq('transaction_hash', hash)
                         .maybeSingle();
-                    
-                    data = txResult.data;
-                    error = txResult.error;
                 }
+
+                const { data, error } = result;
 
                 if (error) { throw error; }
 
@@ -159,9 +160,11 @@
                     document.getElementById('resName').innerText = "No matching record found";
                     document.getElementById('resTime').innerText = "--";
                     document.getElementById('resTx').innerText = "--";
+                    debugMsg.innerText = "Search completed. No matches in Ledger.";
                     return;
                 }
 
+                // SUCCESS
                 document.getElementById('statusBadge').innerText = "VERIFIED VALID";
                 document.getElementById('statusBadge').style.background = "#00D26A";
                 document.getElementById('resName').innerText = data.asset_name || "Confidential";
@@ -171,9 +174,10 @@
                     ? `<a href="https://polygonscan.com/tx/${tx}" target="_blank" style="color:#00D26A; text-decoration:underline;">${tx.substring(0,16)}... ↗</a>` 
                     : tx;
                 resultArea.style.display = "block";
+                debugMsg.innerText = "Verification ID: " + hash.substring(0,8) + "...";
 
             } catch (err) {
-                console.error('[Verify] Error:', err);
+                console.error('[Verify] Critical Error:', err);
                 resultArea.style.display = "block";
                 document.getElementById('statusBadge').innerText = "CONNECTION ERROR";
                 document.getElementById('statusBadge').style.background = "#ff3333";
@@ -192,7 +196,7 @@
             <a href="index.html">Home</a> <a href="verify.html">Verify</a> <a href="privacy.html">Privacy</a> <a href="terms.html">Terms</a> <a href="support.html">Support</a>
         </div>
         <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock LLC. (v2.3) <br>
+            &copy; 2025 ProofLock LLC. (v2.4) <br>
             Patent Pending.
         </div>
     </footer>
