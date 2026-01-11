@@ -228,8 +228,8 @@
 
     <script>
         const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
-        // CORRECTED KEY: Standard Supabase anon keys are JWT tokens (start with "eyJ")
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlZnVkZXBwenJyc2lwd3pvcWNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI4MTUyNTQsImV4cCI6MjA3ODM5MTI1NH0.Lh5tQ5aEWb_7BSkJM_me9fRvBgahlBUqqslMXqgrtRQ';
+        // CORRECTED KEY: Using the new 'sb_publishable' format from your dashboard screenshot
+        const SUPABASE_KEY = 'sb_publishable_876h9RnxuswzMrLWVY-baw_K4XZUWaR';
         
         let supabaseClient;
 
@@ -237,11 +237,6 @@
             // Safe Init
             if (window.supabase) {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-            }
-
-            // Safety check for valid JWT format
-            if (!SUPABASE_KEY.startsWith('ey')) {
-                console.error("CRITICAL ARCHITECT WARNING: The Supabase Key provided does not look like a valid JWT. Check your Dashboard credentials.");
             }
 
             // Auto-trigger from URL
