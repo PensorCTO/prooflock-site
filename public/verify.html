@@ -228,7 +228,7 @@
 
     <script>
         const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
-        // CORRECTED KEY: Using the new 'sb_publishable' format from your dashboard screenshot
+        // CONFIG: Valid Modern Supabase Key
         const SUPABASE_KEY = 'sb_publishable_876h9RnxuswzMrLWVY-baw_K4XZUWaR';
         
         let supabaseClient;
@@ -267,23 +267,14 @@
                 const { data, error } = await supabaseClient
                     .from('proof_ledger')
                     .select('asset_name, created_at, transaction_hash')
-                    .or(`asset_hash.ieq.${hash},transaction_hash.ieq.${hash}`)
+                    // FIX: Wrapped ${hash} in quotes to prevent numeric parsing errors
+                    .or(`asset_hash.ieq."${hash}",transaction_hash.ieq."${hash}"`)
                     .maybeSingle();
 
-                // Log the full response for debugging
                 console.log('[Verify] Response:', { data, error });
 
                 if (error) {
-                    // Log PostgREST error details
-                    console.error('[Verify] PostgREST Error:', {
-                        message: error.message,
-                        details: error.details,
-                        hint: error.hint,
-                        code: error.code,
-                        fullError: error
-                    });
-                    
-                    // Show connection/system error
+                    console.error('[Verify] PostgREST Error:', error);
                     resultArea.style.display = "block";
                     document.getElementById('statusBadge').innerText = "CONNECTION ERROR";
                     document.getElementById('statusBadge').style.background = "var(--fail-color)";
@@ -294,7 +285,6 @@
                 }
 
                 if (!data) {
-                    // maybeSingle returns null when no record found (not an error)
                     console.log('[Verify] No record found for hash:', hash);
                     resultArea.style.display = "block";
                     document.getElementById('statusBadge').innerText = "RECORD NOT FOUND";
@@ -319,8 +309,6 @@
 
                 resultArea.style.display = "block";
             } catch (err) {
-                // Unexpected error (shouldn't happen with maybeSingle, but handle gracefully)
-                console.error("Supabase Error Context:", err);
                 console.error('[Verify] Unexpected error:', err);
                 resultArea.style.display = "block";
                 document.getElementById('statusBadge').innerText = "SYSTEM ERROR";
