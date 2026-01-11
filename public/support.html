@@ -125,6 +125,26 @@
             width: 100%;
             box-sizing: border-box;
         }
+        
+        input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.1);
+        }
+
         textarea {
             width: 100%;
             box-sizing: border-box;
@@ -292,7 +312,8 @@
             </div>
 
             <div class="input-group">
-                <textarea id="message-input" placeholder="Describe the issue... (Device model, iOS version, what happened?)"></textarea>
+                <input type="text" id="subject-input" placeholder="Subject (e.g., Login Issue, Payment Question)" />
+                <textarea id="message-input" placeholder="Describe the details..."></textarea>
             </div>
             <button class="submit-btn" onclick="submitTicket()" id="submit-btn">Submit Ticket</button>
 
@@ -320,37 +341,30 @@
             <a href="support.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Support</a>
         </div>
         <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock LLC. (v2.0)
+            &copy; 2025 ProofLock LLC. (v2.2)
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // --- 1. CONFIGURATION (FIXED) ---
         const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_876h9RnxuswzMrLWVY-baw_K4XZUWaR';
         
         let supabaseClient;
         
-        // --- 2. INITIALIZATION (STANDARDIZED) ---
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("ProofLock Support v2.0 Loaded");
+            console.log("ProofLock Support v2.2 Loaded");
             if (window.supabase) {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
             }
-            
-            // Initialization Logic moved here to ensure library is loaded
             initUI();
         });
 
-        // --- 3. STATE ---
         const urlParams = new URLSearchParams(window.location.search);
         const myUuid = urlParams.get('uid'); 
         let currentMode = 'bug'; 
 
-        // --- 4. UI INIT ---
         function initUI() {
-            // Event Listeners for Toggles
             const typeToggle = document.querySelector('.type-toggle');
             if (typeToggle) {
                 typeToggle.addEventListener('click', function(e) {
@@ -363,7 +377,6 @@
                 });
             }
 
-            // Mode Logic
             const btnIssue = document.getElementById('btn-issue');
             if (!myUuid) {
                 document.getElementById('guest-warning').style.display = 'block';
@@ -377,7 +390,6 @@
             }
         }
 
-        // --- 5. TOGGLE LOGIC ---
         function setMode(mode) {
             if (mode === 'bug' && !myUuid) return false;
             
@@ -403,7 +415,6 @@
             return true;
         }
 
-        // --- 6. FETCH LOGIC ---
         async function fetchTickets() {
             if (!supabaseClient) return;
 
@@ -427,13 +438,13 @@
                 return;
             }
 
-            // Render List
             listEl.innerHTML = data.map(ticket => `
                 <div class="ticket-card">
                     <div class="ticket-header">
                         <span class="status-badge status-${ticket.status}">${ticket.status}</span>
                         <span class="ticket-date">${new Date(ticket.created_at).toLocaleDateString()} • ${ticket.type.toUpperCase()}</span>
                     </div>
+                    ${ticket.subject ? `<div style="font-weight:bold; color:white; margin-bottom:5px;">${escapeHtml(ticket.subject)}</div>` : ''}
                     <div class="ticket-msg">${escapeHtml(ticket.message)}</div>
                     ${ticket.admin_reply ? `
                         <div class="admin-reply">
@@ -448,10 +459,10 @@
             `).join('');
         }
 
-        // --- 7. SUBMIT LOGIC ---
         async function submitTicket() {
             if (!supabaseClient) return;
 
+            const subject = document.getElementById('subject-input').value.trim();
             const msg = document.getElementById('message-input').value.trim();
             const btn = document.getElementById('submit-btn');
 
@@ -463,9 +474,11 @@
 
             const submissionUuid = myUuid || crypto.randomUUID();
 
+            // FIXED: Sending subject as a separate column
             const { error } = await supabaseClient.from('customer_service').insert({
                 user_uuid: submissionUuid,
                 type: currentMode,
+                subject: subject, // Requires DB column 'subject'
                 message: msg,
                 status: 'open'
             });
@@ -475,6 +488,7 @@
                 btn.disabled = false;
                 btn.innerText = "Try Again";
             } else {
+                document.getElementById('subject-input').value = "";
                 document.getElementById('message-input').value = "";
                 btn.innerText = "Sent ✅";
                 setTimeout(() => { 
