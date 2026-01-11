@@ -1,5 +1,5 @@
 --- MASTER CONTEXT REPORT ---
-Generated: Mon Jan  5 10:52:32 EST 2026
+Generated: Sun Jan 11 16:07:57 EST 2026
 
 --- PROJECT ROOT ---
 /Users/paulensor/projects/prooflock-site
@@ -9,55 +9,63 @@ On branch main
 Your branch is up to date with 'origin/main'.
 
 Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
+  (use "git add/rm <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-	modified:   .DS_Store
+	modified:   gather_context.sh
 	modified:   prooflock_context.txt
+	modified:   public/.DS_Store
+	modified:   public/assets/.DS_Store
+	deleted:    public/assets/four_pillars_diagramback.png
+	modified:   public/verify.html
 
 no changes added to commit (use "git add" and/or "git commit -a")
 
 --- FILE STRUCTURE ---
-./gather_context.sh
-./optimize_assets.sh
+.
 ./prooflock_context.txt
-./public/assets_backup_1766798605/chip_icon.png
+./wrangler.json
+./supabase
+./supabase/functions
+./supabase/functions/send-certificate
+./public
+./public/index.html
+./public/decrypt.html
+./public/support.html
+./public/terms.html
+./public/assets_backup_1766798605
 ./public/assets_backup_1766798605/four_pillars_diagramback.png
-./public/assets_backup_1766798605/guide_courier.png
+./public/assets_backup_1766798605/vault-bg.jpg
+./public/assets_backup_1766798605/chip_icon.png
 ./public/assets_backup_1766798605/guide_invisible.png
 ./public/assets_backup_1766798605/GuideToUnlockingCrypto.png
 ./public/assets_backup_1766798605/GuideToUnlockingProof.png
-./public/assets_backup_1766798605/vault-bg.jpg
-./public/assets/background_art.jpg
-./public/assets/chip_icon.png
-./public/assets/four_pillars_diagram.png
-./public/assets/four_pillars_diagramback.png
-./public/assets/guide_courier.png
-./public/assets/guide_cryptolock.png
-./public/assets/guide_invisible.png
-./public/assets/guide_prooflock.png
-./public/assets/GuideToUnlockingCrypto.png
-./public/assets/GuideToUnlockingProof.png
-./public/assets/HowToPanel1.png
-./public/assets/HowToPanel2.png
+./public/assets_backup_1766798605/guide_courier.png
+./public/verify.html
+./public/assets
 ./public/assets/security-badge.jpg
 ./public/assets/vault-bg.jpg
-./public/decrypt.html
-./public/index.html
+./public/assets/chip_icon.png
+./public/assets/anatomy_2026.png
+./public/assets/background_art.jpg
+./public/assets/guide_invisible.png
+./public/assets/GuideToUnlockingCrypto.png
+./public/assets/guide_cryptolock.png
+./public/assets/GuideToUnlockingProof.png
+./public/assets/guide_prooflock.png
+./public/assets/HowToPanel1.png
+./public/assets/four_pillars_diagram.png
+./public/assets/HowToPanel2.png
+./public/assets/guide_courier.png
 ./public/privacy.html
-./public/terms.html
-./public/verify.html
-./supabase/functions/send-certificate/deno.json
-./supabase/functions/send-certificate/index.ts
-./supabase/functions/send-certificate/tsconfig.json
-./supabase/functions/send-certificate/types.d.ts
-./wrangler.json
+./gather_context.sh
+./optimize_assets.sh
 
 --- ASSET SIZES (MB/KB) ---
-total 27152
+total 39696
+-rw-r--r--@ 1 paulensor  staff   7.0M Jan  4 19:59 anatomy_2026.png
 -rw-r--r--@ 1 paulensor  staff   1.2M Nov 19 14:16 background_art.jpg
 -rw-r--r--@ 1 paulensor  staff   218K Dec 26 20:23 chip_icon.png
 -rw-r--r--@ 1 paulensor  staff   1.1M Dec 14 06:54 four_pillars_diagram.png
--rw-r--r--@ 1 paulensor  staff   866K Dec 26 20:23 four_pillars_diagramback.png
 -rw-r--r--@ 1 paulensor  staff   550K Dec 26 20:23 guide_courier.png
 -rw-r--r--@ 1 paulensor  staff   494K Nov 24 09:39 guide_cryptolock.png
 -rw-r--r--@ 1 paulensor  staff   502K Dec 26 20:23 guide_invisible.png
@@ -69,270 +77,27 @@ total 27152
 -rw-r--r--@ 1 paulensor  staff   502K Nov 18 17:25 security-badge.jpg
 -rw-r--r--@ 1 paulensor  staff   761K Dec 26 20:23 vault-bg.jpg
 
---------------------------------------------------
+--- SUPABASE & SCHEMA AUDIT ---
+[Checking frontend for DB dependencies]
+./public/support.html:480:            const { data, error } = await supabase.rpc('get_filtered_tickets', { lookup_uuid: lookupId });
+./public/support.html:531:            const { error } = await supabase.from('customer_service').insert({
+./public/verify.html:271:                    .from('proof_ledger')
+./public/verify.html:272:                    .select('asset_name, created_at, transaction_hash')
+
+[Auditing RLS & Schema Definitions in Migrations]
+No local migrations found; direct DB check required.
+
+--- CONFIGURATION FILES ---
 [FILE]: wrangler.json
---------------------------------------------------
 {
   "name": "prooflock",
   "compatibility_date": "2024-11-24",
   "assets": {
     "directory": "./public"
   }
-}
-[END OF FILE: wrangler.json]
-
---------------------------------------------------
-[FILE]: public/decrypt.html
---------------------------------------------------
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decrypt Your Asset | ProofLock</title>
-    <style>
-        /* THEME: Dark Mode / Vault Aesthetic */
-        :root {
-            --bg-color: #050505;
-            --text-color: #e0e0e0;
-            --accent-color: #00ff9d; /* Neon Green */
-            --glass-bg: rgba(20, 20, 20, 0.8);
-            --border-color: #333;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            padding-top: 80px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            /* Attempt to use the background art if available, fallback to dark color */
-            background-image: url('assets/background_art.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* GLOBAL NAVIGATION */
-        .global-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-decoration: none;
-            letter-spacing: -1px;
-            margin-right: auto;
-        }
-
-        .nav-brand .brand-lock {
-            color: #00D26A;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #00D26A;
-        }
-
-        @media (max-width: 768px) {
-            .global-nav {
-                padding: 0 20px;
-            }
-            .nav-links {
-                gap: 15px;
-            }
-            .nav-links a {
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Overlay to darken background image for readability */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: -1;
-        }
-
-        /* HEADER */
-        .header {
-            text-align: center;
-            padding: 30px 20px;
-            max-width: 600px;
-        }
-
-        .logo {
-            width: 60px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 8px rgba(0, 255, 157, 0.3));
-        }
-
-        h1 {
-            font-size: 28px;
-            margin: 0 0 10px 0;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        p.subtitle {
-            color: #888;
-            font-size: 16px;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        /* DUAL GUIDE CONTAINER */
-        .guides-container {
-            display: flex;
-            flex-direction: row; /* Side by side on desktop */
-            gap: 30px;
-            padding: 20px;
-            width: 100%;
-            max-width: 1200px;
-            box-sizing: border-box;
-            justify-content: center;
-            align-items: flex-start;
-            margin-bottom: 40px;
-        }
-
-        /* INDIVIDUAL GUIDE CARD */
-        .guide-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 10px;
-            flex: 1;
-            max-width: 500px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            transition: transform 0.2s;
-        }
-
-        .guide-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent-color);
-        }
-
-        .guide-image {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            display: block;
-        }
-
-        /* Footer link hover states */
-        footer a:hover {
-            color: #00D26A !important;
-        }
-
-        /* MOBILE RESPONSIVENESS */
-        @media (max-width: 768px) {
-            .guides-container {
-                flex-direction: column; /* Stack vertically on mobile */
-                align-items: center;
-            }
-
-            .guide-card {
-                width: 100%;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Global Navigation -->
-    <nav class="global-nav">
-        <a href="index.html" class="nav-brand">Proof<span class="brand-lock">Lock</span></a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="verify.html">Verify</a>
-            <a href="decrypt.html">Decrypt</a>
-        </div>
-    </nav>
-
-    <div class="overlay"></div>
-
-    <header class="header">
-        <img src="assets/chip_icon.png" alt="ProofLock Logo" class="logo">
-        <h1>Secure Decryption Portal</h1>
-        <p class="subtitle">Identify the type of secure asset you have received below to view unlocking instructions.</p>
-    </header>
-
-    <div class="guides-container">
-        <div class="guide-card">
-            <img src="assets/GuideToUnlockingProof.png" alt="Guide to Unlocking ProofLock" class="guide-image">
-        </div>
-
-        <div class="guide-card">
-            <img src="assets/GuideToUnlockingCrypto.png" alt="Guide to Unlocking CryptoLock" class="guide-image">
-        </div>
-    </div>
-
-    <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto;">
-        <div style="margin-bottom: 20px;">
-            <a href="index.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Home</a>
-            <a href="verify.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Verify Asset</a>
-            <a href="privacy.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
-            <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
-        </div>
-        <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock Inc. Non-Custodial Security.<br>
-            Patent Pending.
-        </div>
-    </footer>
-
-</body>
-</html>
-[END OF FILE: public/decrypt.html]
-
---------------------------------------------------
+}[END OF FILE: wrangler.json]
+--- CRITICAL SOURCE FILES ---
 [FILE]: public/index.html
---------------------------------------------------
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -350,14 +115,24 @@ total 27152
             --glass-border: rgba(255, 255, 255, 0.15);
         }
         
-        body {
+        html, body {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        body {
             padding-top: 80px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
             background: url('assets/vault-bg.jpg') no-repeat center center fixed;
             background-size: cover;
+        }
+        
+        * {
+            box-sizing: border-box;
         }
 
         /* GLOBAL NAVIGATION */
@@ -431,12 +206,18 @@ total 27152
             background-color: rgba(5, 5, 5, 0.75); 
             min-height: 100vh;
             width: 100%;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
         }
         
         /* --- HERO SECTION --- */
@@ -447,7 +228,9 @@ total 27152
 
         .hero-badge {
             width: 360px;
-            margin-bottom: 40px;
+            max-width: 100%;
+            margin: 0 auto 40px auto;
+            display: block;
             border-radius: 50%;
             box-shadow: 0 0 80px rgba(var(--accent-rgb), 0.35);
             animation: float 8s ease-in-out infinite;
@@ -523,14 +306,19 @@ total 27152
             background: rgba(0,0,0,0.5);
             border-top: 1px solid rgba(255,255,255,0.1);
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            margin: 0;
+            display: block;
         }
         .sales-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
+            width: 100%;
+            box-sizing: border-box;
         }
         .sales-card {
-            text-align: left;
+            text-align: center;
             padding: 20px;
         }
         .sales-num {
@@ -560,13 +348,17 @@ total 27152
         .architecture {
             text-align: center;
             padding: 100px 20px;
+            width: 100%;
+            margin: 0;
+            display: block;
         }
         
         .diagram-large {
             width: 100%;
             max-width: 1200px;
             height: auto;
-            margin-bottom: 40px;
+            margin: 0 auto 40px auto;
+            display: block;
             border-radius: 16px;
             box-shadow: 0 0 60px rgba(var(--accent-rgb), 0.2);
             border: 1px solid rgba(255,255,255,0.1);
@@ -577,6 +369,9 @@ total 27152
             background-color: #080808; 
             padding: 60px 0; /* Reduced vertical padding */
             border-top: 1px solid #222;
+            width: 100%;
+            margin: 0;
+            display: block;
         }
         h2 {
             font-size: 26px;
@@ -596,15 +391,19 @@ total 27152
             display: flex;
             align-items: center;
             gap: 40px;
-            margin-bottom: 50px; /* Reduced margin */
+            margin: 0 auto 50px auto; /* Reduced margin */
             max-width: 900px; /* Constrain width to keep it tight */
-            margin-left: auto;
-            margin-right: auto;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 20px;
         }
         .feature-row.reverse {
             flex-direction: row-reverse;
         }
-        .feature-text { flex: 1; }
+        .feature-text { 
+            flex: 1; 
+            text-align: center;
+        }
         
         /* Compact Image Container */
         .feature-img { 
@@ -657,14 +456,16 @@ total 27152
             list-style: none;
             padding: 0;
             margin: 0;
+            text-align: center;
         }
         .feature-text li {
             margin-bottom: 8px;
-            padding-left: 12px;
-            border-left: 2px solid var(--accent);
+            padding: 0;
+            border: none;
             color: #ccc;
             font-size: 0.9rem; /* Compact body text */
-            line-height: 1.4;
+            line-height: 1.6;
+            text-align: center;
         }
 
         /* --- FOUNDER BIO --- */
@@ -674,6 +475,8 @@ total 27152
             border-top: 1px solid #222;
             display: flex;
             justify-content: center;
+            width: 100%;
+            margin: 0;
         }
         .bio-container {
             max-width: 800px;
@@ -744,6 +547,7 @@ total 27152
             <a href="index.html">Home</a>
             <a href="verify.html">Verify</a>
             <a href="decrypt.html">Decrypt</a>
+            <a href="support.html">Support</a>
         </div>
     </nav>
 
@@ -772,16 +576,16 @@ total 27152
                 <div class="sales-grid">
                     <div class="sales-card">
                         <span class="sales-num">01</span>
-                        <span class="sales-title">Privacy Vault</span>
+                        <span class="sales-title">The Archive</span>
                         <p class="sales-desc">
-                            Use <strong>CryptoLock™</strong> to encrypt your personal photos, journals, and documents with military-grade AES-256. Your keys never leave your device. Total privacy.
+                            The application is your secure container. Assets are <strong>XOR encrypted</strong> for local privacy, ensuring your personal data remains obfuscated and offline.
                         </p>
                     </div>
                     <div class="sales-card">
                         <span class="sales-num">02</span>
                         <span class="sales-title">Deepfake Defense</span>
                         <p class="sales-desc">
-                            Use <strong>ProofLock™</strong> to mathematically notarize your media on the public blockchain. Prove exactly <em>what</em> happened and <em>when</em> it happened, immune to AI alteration.
+                            Use <strong>ProofLock™</strong> to mathematically notarize your media on the public blockchain with Forensic Standard verification. Prove exactly <em>what</em> happened and <em>when</em> it happened, immune to AI alteration.
                         </p>
                     </div>
                     <div class="sales-card">
@@ -797,11 +601,11 @@ total 27152
 
         <section class="architecture">
             <div class="container">
-                <img src="assets/four_pillars_diagram.png" alt="Ghost-Link Architecture Diagram" class="diagram-large" loading="lazy">
+                <img src="assets/anatomy_2026.png" alt="ProofLock Core Architecture Diagram" class="diagram-large" loading="lazy">
                 
-                <h2 style="font-size: 26px; margin-bottom: 20px; color: white;">Powered by Ghost-Link™</h2>
+                <h2 style="font-size: 26px; margin-bottom: 20px; color: white;">Powered by ProofLock Core™</h2>
                 <p style="max-width: 800px; margin: 0 auto; color: #ccc; font-size: 1.2rem; line-height: 1.7;">
-                    We decouple <strong>Identity</strong> from <strong>Content</strong>. 
+                    Built on a <strong>Zero-Knowledge Core</strong>, we decouple <strong>Identity</strong> from <strong>Content</strong>. 
                     Unlike traditional encryption, our architecture allows you to share verified, tamper-proof assets 
                     without ever exposing your master private identity.
                 </p>
@@ -815,16 +619,14 @@ total 27152
                 <div class="feature-row">
                     <div class="feature-text">
                         <span class="feature-num-compact">01</span>
-                        <h3>The Privacy Vault</h3>
+                        <h3>Secure Preservation</h3>
                         <p class="feature-hook">Keep your secrets secret.</p>
                         <ul>
-                            <li>Select any file (Photo, Video, Doc).</li>
-                            <li>Tap <strong>CryptoLock</strong> (Grey Button).</li>
-                            <li>Your file is encrypted locally with AES-256. No cloud backups. No AI scanning. Only you hold the key.</li>
+                            <li>Select any file. It is instantly secured using <strong>XOR privacy encoding</strong>. No cloud backups. No AI scanning. Your data stays on your device.</li>
                         </ul>
                     </div>
                     <div class="feature-img">
-                        <img src="assets/guide_cryptolock.png" alt="CryptoLock Safe" loading="lazy">
+                        <img src="assets/guide_cryptolock.png" alt="Secure Preservation" loading="lazy">
                     </div>
                 </div>
 
@@ -860,21 +662,6 @@ total 27152
                     </div>
                 </div>
 
-                <div class="feature-row reverse">
-                    <div class="feature-text">
-                        <span class="feature-num-compact">04</span>
-                        <h3>The Invisible Vault</h3>
-                        <p class="feature-hook">Air-Gapped Security.</p>
-                        <ul>
-                            <li>Entering a high-risk zone? Tap <strong>Log Out</strong>.</li>
-                            <li>This destroys the decryption keys in your phone's Secure Enclave.</li>
-                            <li>Your vault becomes mathematically inaccessible until you re-authorize via a separate device.</li>
-                        </ul>
-                    </div>
-                    <div class="feature-img">
-                        <img src="assets/guide_invisible.png" alt="Invisible Vault Fortress" loading="lazy">
-                    </div>
-                </div>
 
             </div>
         </section>
@@ -903,346 +690,17 @@ total 27152
                 <a href="verify.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Verify Asset</a>
                 <a href="privacy.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
                 <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
+                <a href="support.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Support</a>
             </div>
             <div style="color: #444; font-size: 12px;">
-                &copy; 2025 ProofLock Inc. Non-Custodial Security.<br>
+                &copy; 2025 ProofLock LLC. Non-Custodial Security.<br>
                 Patent Pending.
             </div>
         </footer>
 
     </div> </body>
-</html>
-[END OF FILE: public/index.html]
-
---------------------------------------------------
-[FILE]: public/privacy.html
---------------------------------------------------
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy | ProofLock</title>
-    <style>
-        :root {
-            --accent: #00D26A;
-            --bg: #0a0a0a;
-            --text: #e0e0e0;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding-top: 80px;
-            line-height: 1.6;
-        }
-
-        /* GLOBAL NAVIGATION */
-        .global-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-decoration: none;
-            letter-spacing: -1px;
-            margin-right: auto;
-        }
-
-        .nav-brand .brand-lock {
-            color: #00D26A;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #00D26A;
-        }
-
-        @media (max-width: 768px) {
-            .global-nav {
-                padding: 0 20px;
-            }
-            .nav-links {
-                gap: 15px;
-            }
-            .nav-links a {
-                font-size: 0.85rem;
-            }
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            min-height: calc(100vh - 200px);
-        }
-
-        h1 {
-            color: white;
-            font-size: 2.5rem;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            color: white;
-            margin-top: 40px;
-            font-size: 1.5rem;
-        }
-
-        p, li {
-            color: #aaa;
-            font-size: 1rem;
-            margin-bottom: 15px;
-        }
-
-        ul {
-            margin-bottom: 20px;
-        }
-
-        a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #00E673;
-        }
-
-        /* Footer link hover states */
-        footer a:hover {
-            color: #00D26A !important;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Global Navigation -->
-    <nav class="global-nav">
-        <a href="index.html" class="nav-brand">Proof<span class="brand-lock">Lock</span></a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="verify.html">Verify</a>
-            <a href="decrypt.html">Decrypt</a>
-        </div>
-    </nav>
-
-    <div class="container">
-        <h1>Privacy Policy</h1>
-        <p><strong>Last Updated:</strong> December 2025</p>
-
-        <h2>1. Non-Custodial Security</h2>
-        <p>ProofLock is a non-custodial security application. <strong>We do not have access to your private keys, your encrypted files, or your passcodes.</strong> If you lose your credentials, ProofLock Inc. cannot recover your data.</p>
-
-        <h2>2. Data Collection</h2>
-        <p>We believe in data minimization. We collect only what is strictly necessary:</p>
-        <ul>
-            <li><strong>On-Chain Data:</strong> When you notarize a file, a cryptographic hash is written to the Polygon public blockchain. This is immutable and public.</li>
-            <li><strong>Analytics:</strong> We collect anonymous app usage data (crashes, session duration) to improve stability. No personally identifiable information (PII) is attached to these logs.</li>
-        </ul>
-
-        <h2>3. Zero-Knowledge Encryption</h2>
-        <p>All encryption operations (AES-256) occur locally on your device's Secure Enclave. Your unencrypted data never leaves your device unless you explicitly choose to share it.</p>
-
-        <h2>4. Contact Us</h2>
-        <p>If you have questions about privacy, email us at <a href="mailto:privacy@prooflock.io">privacy@prooflock.io</a>.</p>
-    </div>
-
-    <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto;">
-        <div style="margin-bottom: 20px;">
-            <a href="index.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Home</a>
-            <a href="verify.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Verify Asset</a>
-            <a href="privacy.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
-            <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
-        </div>
-        <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock Inc. Non-Custodial Security.<br>
-            Patent Pending.
-        </div>
-    </footer>
-
-</body>
-</html>
-
-
-[END OF FILE: public/privacy.html]
-
---------------------------------------------------
-[FILE]: public/terms.html
---------------------------------------------------
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service | ProofLock</title>
-    <style>
-        :root { --accent: #00D26A; --bg: #0a0a0a; --text: #e0e0e0; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding-top: 80px; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        h1 { color: white; font-size: 2.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 30px; }
-        h2 { color: white; margin-top: 40px; font-size: 1.5rem; }
-        p { color: #aaa; font-size: 1rem; margin-bottom: 15px; }
-
-        /* GLOBAL NAVIGATION */
-        .global-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-decoration: none;
-            letter-spacing: -1px;
-            margin-right: auto;
-        }
-
-        .nav-brand .brand-lock {
-            color: #00D26A;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #00D26A;
-        }
-
-        @media (max-width: 768px) {
-            .global-nav {
-                padding: 0 20px;
-            }
-            .nav-links {
-                gap: 15px;
-            }
-            .nav-links a {
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Footer link hover states */
-        footer a:hover {
-            color: #00D26A !important;
-        }
-    </style>
-</head>
-<body>
-    <!-- Global Navigation -->
-    <nav class="global-nav">
-        <a href="index.html" class="nav-brand">Proof<span class="brand-lock">Lock</span></a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="verify.html">Verify</a>
-            <a href="decrypt.html">Decrypt</a>
-        </div>
-    </nav>
-
-    <div class="container">
-        <h1>Terms of Service</h1>
-        <p><strong>Effective Date:</strong> December 2025</p>
-
-        <h2>1. Acceptance of Terms</h2>
-        <p>By downloading or using the ProofLock application, you agree to these terms. If you do not agree, you must uninstall the application immediately.</p>
-
-        <h2>2. No Warranty</h2>
-        <p>ProofLock is provided "as is" without warranty of any kind. While we use military-grade encryption standards, we cannot guarantee absolute immunity from all future security threats or user error.</p>
-
-        <h2>3. User Responsibility</h2>
-        <p>You are solely responsible for safeguarding your private keys and passcodes. ProofLock Inc. assumes no liability for data loss resulting from forgotten passwords or lost devices.</p>
-
-        <h2>4. Immutable Blockchain Records</h2>
-        <p>You acknowledge that data written to the blockchain is permanent and cannot be deleted or edited by ProofLock Inc.</p>
-
-        <h2>5. Governing Law</h2>
-        <p>These terms shall be governed by the laws of the State of Delaware, without regard to its conflict of law provisions.</p>
-    </div>
-
-    <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto;">
-        <div style="margin-bottom: 20px;">
-            <a href="index.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Home</a>
-            <a href="verify.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Verify Asset</a>
-            <a href="privacy.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
-            <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
-        </div>
-        <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock Inc. Non-Custodial Security.<br>
-            Patent Pending.
-        </div>
-    </footer>
-
-    </body>
-</html>
-[END OF FILE: public/terms.html]
-
---------------------------------------------------
+</html>[END OF FILE: public/index.html]
 [FILE]: public/verify.html
---------------------------------------------------
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1251,22 +709,22 @@ total 27152
     <title>ProofLock Verification</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* BASE THEME: Dark Mode / Vault Aesthetic */
         :root {
             --bg-color: #0a0a0a;
             --text-color: #e0e0e0;
             --accent-color: #00D26A; /* Corporate Green */
-            --glass-bg: rgba(20, 20, 20, 0.9);
             --border-color: #333;
             --success-color: #00D26A;
             --fail-color: #ff3333;
+            --warning-color: #ffaa33;
         }
 
         body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            padding-top: 80px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* IMAGE PATH FIXED */
             background: url('assets/background_art.jpg') no-repeat center center fixed;
             background-size: cover;
             color: var(--text-color);
@@ -1279,7 +737,90 @@ total 27152
             position: relative;
         }
 
-        /* Dark overlay for readability */
+        /* GLOBAL NAVIGATION */
+        .global-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: -1px;
+            margin-right: auto;
+        }
+
+        .nav-brand .brand-lock {
+            color: #00D26A;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #00D26A;
+        }
+
+        @media (max-width: 768px) {
+            .global-nav {
+                padding: 0 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* FOOTER */
+        footer {
+            background: #000;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        footer a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #00D26A;
+        }
+
+        /* Visibility Overlay */
         body::before {
             content: '';
             position: fixed;
@@ -1287,13 +828,831 @@ total 27152
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(5, 5, 5, 0.5);
+            background-color: rgba(5, 5, 5, 0.65);
             z-index: 0;
         }
 
         body > * {
             position: relative;
             z-index: 1;
+        }
+
+        .verify-container {
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+        }
+
+        h1 { font-weight: 700; margin-bottom: 10px; }
+        p { color: #888; margin-bottom: 30px; font-size: 14px; }
+
+        input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--accent-color);
+            font-family: monospace;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        #result-area {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            text-align: left;
+        }
+
+        .status-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .label { color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .value { color: #fff; font-family: monospace; font-size: 13px; word-break: break-all; }
+        
+        .verified-badge {
+            background: var(--success-color);
+            color: #000;
+            text-align: center;
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="global-nav">
+        <a href="index.html" class="nav-brand">Proof<span class="brand-lock">Lock</span></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="verify.html">Verify</a>
+            <a href="decrypt.html">Decrypt</a>
+            <a href="support.html">Support</a>
+        </div>
+    </nav>
+
+    <div class="verify-container">
+        <div style="font-size: 40px; margin-bottom: 15px;">🛡️</div>
+        <h1>Verify Integrity</h1>
+        <p>Confirm asset status on the public ledger.</p>
+
+        <input type="text" id="hashInput" placeholder="Paste Asset Hash..." />
+        <button onclick="handleVerify()" id="verifyBtn">Verify Ledger</button>
+
+        <div id="result-area">
+            <div id="statusBadge" class="verified-badge">VERIFIED VALID</div>
+            <div class="status-row"><span class="label">Asset Name</span><span class="value" id="resName">--</span></div>
+            <div class="status-row"><span class="label">Timestamp</span><span class="value" id="resTime">--</span></div>
+            <div class="status-row"><span class="label">Ledger TX</span><span class="value" id="resTx">--</span></div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
+        // IMPORTANT: This must be the anon/public key (not service_role key)
+        // Standard Supabase anon keys are JWT tokens (start with "eyJ") or base64-like strings
+        // Verify in Supabase Dashboard: Settings > API > Project API keys > anon/public
+        const SUPABASE_KEY = 'sb_publishable_876h9RnxuswzMrLWVY-baw_K4XZUWaR';
+        
+        let supabaseClient;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Safe Init
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            }
+
+            // Auto-trigger from URL
+            const params = new URLSearchParams(window.location.search);
+            const hash = params.get('hash');
+            if (hash) {
+                document.getElementById('hashInput').value = hash;
+                handleVerify(hash);
+            }
+        });
+
+        async function handleVerify(passedHash = null) {
+            const input = document.getElementById('hashInput');
+            const btn = document.getElementById('verifyBtn');
+            const resultArea = document.getElementById('result-area');
+            
+            // Normalize hash: trim whitespace and convert to lowercase for case-insensitive matching
+            const rawHash = passedHash || input.value;
+            const hash = rawHash ? rawHash.trim().toLowerCase() : '';
+            if(!hash || !supabaseClient) return;
+
+            btn.innerText = "Scanning...";
+            btn.disabled = true;
+            resultArea.style.display = "none";
+
+            try {
+                console.log('[Verify] Querying ledger for hash:', hash);
+                const { data, error } = await supabaseClient
+                    .from('proof_ledger')
+                    .select('asset_name, created_at, transaction_hash')
+                    .or(`asset_hash.ieq.${hash},transaction_hash.ieq.${hash}`)
+                    .maybeSingle();
+
+                // Log the full response for debugging
+                console.log('[Verify] Response:', { data, error });
+
+                if (error) {
+                    // Log PostgREST error details
+                    console.error('[Verify] PostgREST Error:', {
+                        message: error.message,
+                        details: error.details,
+                        hint: error.hint,
+                        code: error.code,
+                        fullError: error
+                    });
+                    
+                    // Show connection/system error
+                    resultArea.style.display = "block";
+                    document.getElementById('statusBadge').innerText = "CONNECTION ERROR";
+                    document.getElementById('statusBadge').style.background = "var(--fail-color)";
+                    document.getElementById('resName').innerText = "Unable to connect to ledger. Please try again.";
+                    document.getElementById('resTime').innerText = `Error: ${error.code || 'UNKNOWN'}`;
+                    document.getElementById('resTx').innerText = error.message || 'System error occurred';
+                    return;
+                }
+
+                if (!data) {
+                    // maybeSingle returns null when no record found (not an error)
+                    console.log('[Verify] No record found for hash:', hash);
+                    resultArea.style.display = "block";
+                    document.getElementById('statusBadge').innerText = "RECORD NOT FOUND";
+                    document.getElementById('statusBadge').style.background = "var(--warning-color)";
+                    document.getElementById('resName').innerText = "No matching record found on the ledger";
+                    document.getElementById('resTime').innerText = "--";
+                    document.getElementById('resTx').innerText = "--";
+                    return;
+                }
+
+                // UI Success Render
+                console.log('[Verify] Asset verified:', data);
+                document.getElementById('statusBadge').innerText = "VERIFIED VALID";
+                document.getElementById('statusBadge').style.background = "var(--success-color)";
+                document.getElementById('resName').innerText = data.asset_name || "Confidential Asset";
+                document.getElementById('resTime').innerText = new Date(data.created_at).toLocaleString();
+                
+                const tx = data.transaction_hash || "Pending";
+                document.getElementById('resTx').innerHTML = tx.startsWith('0x') 
+                    ? `<a href="https://polygonscan.com/tx/${tx}" target="_blank" style="color:var(--accent-color); text-decoration:underline;">${tx.substring(0,16)}... ↗</a>`
+                    : tx;
+
+                resultArea.style.display = "block";
+            } catch (err) {
+                // Unexpected error (shouldn't happen with maybeSingle, but handle gracefully)
+                console.error("Supabase Error Context:", err);
+                console.error('[Verify] Unexpected error:', err);
+                resultArea.style.display = "block";
+                document.getElementById('statusBadge').innerText = "SYSTEM ERROR";
+                document.getElementById('statusBadge').style.background = "var(--fail-color)";
+                document.getElementById('resName').innerText = "An unexpected error occurred";
+                document.getElementById('resTime').innerText = err instanceof Error ? err.message : 'Unknown error';
+                document.getElementById('resTx').innerText = "--";
+            } finally {
+                btn.innerText = "Verify Ledger";
+                btn.disabled = false;
+            }
+        }
+    </script>
+
+    <footer>
+        <div style="margin-bottom: 20px;">
+            <a href="index.html">Home</a>
+            <a href="verify.html">Verify Asset</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="support.html">Support</a>
+        </div>
+        <div style="color: #444; font-size: 12px;">
+            &copy; 2025 ProofLock LLC. Non-Custodial Security.<br>
+            Patent Pending.
+        </div>
+    </footer>
+
+</body>
+</html>[END OF FILE: public/verify.html]
+[FILE]: public/support.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Channel | ProofLock</title>
+    <style>
+        /* --- CORE THEME --- */
+        :root {
+            --accent: #00D26A;
+            --accent-rgb: 0, 210, 106;
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
+            --panel-bg: rgba(5, 5, 5, 0.95); /* Nearly Opaque for readability */
+            --panel-border: 1px solid rgba(255, 255, 255, 0.15);
+            --danger: #ff4444;
+            --input-bg: #000000;
+        }
+        
+        body {
+            background: #0a0a0a url('assets/vault-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVIGATION --- */
+        .global-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 60px;
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-brand { font-size: 1.5rem; font-weight: 900; color: #fff; text-decoration: none; margin-right: auto; }
+        .brand-lock { color: var(--accent); }
+        .nav-links { display: flex; gap: 30px; position: absolute; left: 50%; transform: translateX(-50%); }
+        .nav-links a { color: #fff; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .global-nav { padding: 0 20px; }
+            .nav-links { display: none; }
+        }
+
+        /* --- LAYOUT CONTAINER --- */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; letter-spacing: -1px; }
+        .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* --- THE OPAQUE PANEL (Command Console) --- */
+        .command-console {
+            background: var(--panel-bg);
+            border: 2px solid #00a855; /* Thin dark green edge */
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        /* --- TOGGLE SWITCH --- */
+        .type-toggle {
+            display: flex;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+        .toggle-opt {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .toggle-opt.active {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.4);
+        }
+        .toggle-opt:not(.active):hover {
+            color: #999;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .toggle-opt.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* --- INPUTS --- */
+        .input-group { 
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1a1a1a; /* Lighter shade of grey to pop out */
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            transition: 0.3s;
+        }
+        textarea::placeholder {
+            color: #aaaaaa;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: white;
+            color: black;
+            font-weight: 800;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+        .submit-btn:hover {
+            background: var(--accent);
+            box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.4);
+        }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+            /* --- SCROLLABLE HISTORY BOX --- */
+        .history-label {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .history-window {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 8px;
+            height: 400px; /* Fixed Height */
+            overflow-y: auto; /* Scrollable */
+            padding: 15px;
+            /* Inner Shadow for depth */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8); 
+        }
+
+        /* Scrollbar Styling */
+        .history-window::-webkit-scrollbar { width: 8px; }
+        .history-window::-webkit-scrollbar-track { background: #111; }
+        .history-window::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        .history-window::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        .ticket-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+        }
+        .ticket-date { color: #555; }
+        
+        .status-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+        }
+        .status-open { background: #333; color: #ccc; }
+        .status-resolved { background: var(--accent); color: #000; }
+        .status-investigating { background: #eebb00; color: #000; }
+
+        .ticket-msg {
+            color: #ddd;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        /* Admin Reply Section */
+        .admin-reply {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #333;
+            display: flex;
+            gap: 12px;
+        }
+        .reply-avatar {
+            width: 24px; height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: black; font-size: 10px;
+            flex-shrink: 0;
+        }
+        .reply-body { flex: 1; }
+        .reply-label { color: var(--accent); font-size: 0.75rem; font-weight: bold; display: block; margin-bottom: 2px;}
+        .reply-text { color: white; font-size: 0.9rem; }
+
+        /* --- ERROR / EMPTY STATES --- */
+        .guest-warning {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: #ffaaaa;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="global-nav">
+        <a href="index.html" class="nav-brand">Proof<span class="brand-lock">Lock</span></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="verify.html">Verify</a>
+            <a href="decrypt.html">Decrypt</a>
+            <a href="support.html">Support</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="header-section">
+            <h1>Support Channel</h1>
+            <p class="subtitle">Direct line to the ProofLock Architect.</p>
+        </div>
+
+        <div class="command-console">
+            
+            <div id="guest-warning" class="guest-warning">
+                ⚠ <strong>Access Restricted:</strong> Launch from App to submit Private Bugs.
+            </div>
+
+            <div class="type-toggle">
+                <div class="toggle-opt active" id="btn-issue">Report Issue (Private)</div>
+                <div class="toggle-opt" id="btn-feature">Request Feature (Public)</div>
+            </div>
+
+            <div class="input-group">
+                <textarea id="message-input" placeholder="Describe the issue... (Device model, iOS version, what happened?)"></textarea>
+            </div>
+            <button class="submit-btn" onclick="submitTicket()" id="submit-btn">Submit Ticket</button>
+
+            <div class="history-label">
+                <span>Ticket Log</span>
+                <span id="history-status" style="font-weight:normal; opacity:0.5;">Connecting...</span>
+            </div>
+            
+            <div class="history-window">
+                <div id="ticket-list">
+                    <div style="text-align: center; color: #444; padding-top: 150px;">
+                        Initializing Secure Link...
+                    </div>
+                </div>
+            </div>
+
+        </div> </div>
+
+    <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto;">
+        <div style="margin-bottom: 20px;">
+            <a href="index.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Home</a>
+            <a href="verify.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Verify Asset</a>
+            <a href="privacy.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
+            <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
+            <a href="support.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Support</a>
+        </div>
+        <div style="color: #444; font-size: 12px;">
+            &copy; 2025 ProofLock LLC. Non-Custodial Security.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // --- 1. CONFIGURATION ---
+        const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+        const SUPABASE_KEY = 'YOUR_ANON_KEY';
+        
+        // Initialize Supabase client - wait for library to load
+        // Use a function to initialize when ready to avoid conflicts
+        let supabaseClient = null;
+        
+        function initSupabase() {
+            try {
+                // The Supabase CDN exposes it as window.supabase
+                if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
+                    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                    return supabaseClient;
+                }
+                return null;
+            } catch (e) {
+                console.error('Error initializing Supabase:', e);
+                return null;
+            }
+        }
+        
+        // Initialize immediately - script should be loaded by now
+        // Use a small delay to ensure the Supabase library is fully loaded
+        (function() {
+            function attemptInit() {
+                supabaseClient = initSupabase();
+                if (!supabaseClient) {
+                    // Retry after a short delay if not loaded yet
+                    setTimeout(attemptInit, 100);
+                }
+            }
+            attemptInit();
+        })();
+        
+        // Create a proxy to avoid naming conflicts with global supabase
+        // This allows us to use 'supabase' as if it were the client
+        const supabase = new Proxy({}, {
+            get: function(target, prop) {
+                // Try to initialize if not already done
+                if (!supabaseClient) {
+                    supabaseClient = initSupabase();
+                }
+                if (!supabaseClient) {
+                    console.error('Supabase client not initialized yet');
+                    // Return a no-op function for methods to prevent errors
+                    return function() { 
+                        console.error('Supabase not loaded'); 
+                        return Promise.reject(new Error('Supabase not initialized'));
+                    };
+                }
+                const value = supabaseClient[prop];
+                if (typeof value === 'function') {
+                    return value.bind(supabaseClient);
+                }
+                return value;
+            }
+        });
+
+        // --- 2. STATE ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const myUuid = urlParams.get('uid'); 
+        let currentMode = 'bug'; 
+
+        // --- 3. INITIALIZATION ---
+        // Use event delegation for reliable toggle handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeToggle = document.querySelector('.type-toggle');
+            if (typeToggle) {
+                typeToggle.addEventListener('click', function(e) {
+                    const target = e.target;
+                    if (target.id === 'btn-issue' && !target.classList.contains('disabled')) {
+                        setMode('bug');
+                    } else if (target.id === 'btn-feature') {
+                        setMode('feature');
+                    }
+                });
+            }
+        });
+        
+        window.onload = function() {
+            const btnIssue = document.getElementById('btn-issue');
+            
+            if (!myUuid) {
+                document.getElementById('guest-warning').style.display = 'block';
+                setMode('feature');
+                if (btnIssue) {
+                    btnIssue.classList.add('disabled');
+                }
+            } else {
+                setMode('bug'); // Ensure UI is properly initialized for authenticated users
+                fetchTickets();
+            }
+        };
+
+        // --- 4. TOGGLE LOGIC ---
+        function setMode(mode) {
+            // Prevent mode change if issue mode is disabled for guests
+            if (mode === 'bug' && !myUuid) {
+                return false;
+            }
+            
+            currentMode = mode;
+            
+            // Clear all active classes
+            document.querySelectorAll('.toggle-opt').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Apply active class and update UI based on mode
+            if (mode === 'bug') {
+                const btnIssue = document.getElementById('btn-issue');
+                if (btnIssue) {
+                    btnIssue.classList.add('active');
+                    btnIssue.classList.remove('disabled');
+                }
+                const msgInput = document.getElementById('message-input');
+                if (msgInput) {
+                    msgInput.placeholder = "Describe the issue... (Device model, iOS version, what happened?)";
+                }
+                const submitBtn = document.getElementById('submit-btn');
+                if (submitBtn) {
+                    submitBtn.innerText = "Submit Private Report";
+                }
+            } else {
+                const btnFeature = document.getElementById('btn-feature');
+                if (btnFeature) {
+                    btnFeature.classList.add('active');
+                }
+                const msgInput = document.getElementById('message-input');
+                if (msgInput) {
+                    msgInput.placeholder = "Have an idea? Tell us how we can make ProofLock better for you...";
+                }
+                const submitBtn = document.getElementById('submit-btn');
+                if (submitBtn) {
+                    submitBtn.innerText = "Post to Public Board";
+                }
+            }
+            
+            return true;
+        }
+
+        // --- 5. FETCH LOGIC (SECURE RPC) ---
+        async function fetchTickets() {
+            const listEl = document.getElementById('ticket-list');
+            const statusEl = document.getElementById('history-status');
+            const lookupId = myUuid || '00000000-0000-0000-0000-000000000000'; 
+
+            const { data, error } = await supabase.rpc('get_filtered_tickets', { lookup_uuid: lookupId });
+
+            if (error) {
+                console.error(error);
+                listEl.innerHTML = `<div style="color: var(--danger); text-align:center; padding-top: 150px;">Connection Error.</div>`;
+                statusEl.innerText = "Offline";
+                return;
+            }
+
+            statusEl.innerText = "Synced";
+
+            if (!data || data.length === 0) {
+                listEl.innerHTML = `<div style="text-align: center; color: #444; padding-top: 150px;">Log Empty. Start the conversation.</div>`;
+                return;
+            }
+
+            // Render List
+            listEl.innerHTML = data.map(ticket => `
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        <span class="status-badge status-${ticket.status}">${ticket.status}</span>
+                        <span class="ticket-date">${new Date(ticket.created_at).toLocaleDateString()} • ${ticket.type.toUpperCase()}</span>
+                    </div>
+                    <div class="ticket-msg">${escapeHtml(ticket.message)}</div>
+                    
+                    ${ticket.admin_reply ? `
+                        <div class="admin-reply">
+                            <div class="reply-avatar">PL</div>
+                            <div class="reply-body">
+                                <span class="reply-label">Architect Response</span>
+                                <div class="reply-text">${escapeHtml(ticket.admin_reply)}</div>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // --- 6. SUBMIT LOGIC ---
+        async function submitTicket() {
+            const msg = document.getElementById('message-input').value.trim();
+            const btn = document.getElementById('submit-btn');
+
+            if (!msg) return alert("Please enter a message.");
+            if (currentMode === 'bug' && !myUuid) return alert("Private bugs require App ID.");
+
+            btn.disabled = true;
+            btn.innerText = "Encrypting & Sending...";
+
+            const submissionUuid = myUuid || crypto.randomUUID();
+
+            const { error } = await supabase.from('customer_service').insert({
+                user_uuid: submissionUuid,
+                type: currentMode,
+                message: msg,
+                status: 'open'
+            });
+
+            if (error) {
+                alert("Transmission Failed: " + error.message);
+                btn.disabled = false;
+                btn.innerText = "Try Again";
+            } else {
+                document.getElementById('message-input').value = "";
+                btn.innerText = "Sent ✅";
+                setTimeout(() => { 
+                    btn.disabled = false; 
+                    setMode(currentMode); 
+                    fetchTickets(); 
+                }, 2000);
+            }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>[END OF FILE: public/support.html]
+[FILE]: public/decrypt.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Asset Received | ProofLock Courier</title>
+    <style>
+        /* CYBER-UNIFORM 8.0: COMPACT & REFINED - COURIER BLUE VARIANT */
+        :root {
+            --accent: #00a8ff; /* Courier Blue */
+            --accent-rgb: 0, 168, 255;
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
+            --glass-bg: rgba(10, 10, 10, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        body {
+            padding-top: 80px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            background: url('assets/vault-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        
+        * {
+            box-sizing: border-box;
         }
 
         /* GLOBAL NAVIGATION */
@@ -1362,99 +1721,269 @@ total 27152
             }
         }
 
-        .verify-container {
-            background: rgba(10, 10, 10, 0.95);
-            border: 1px solid var(--border-color);
-            padding: 40px;
-            border-radius: 16px;
-            max-width: 500px;
+        /* Overlay */
+        .overlay {
+            background-color: rgba(5, 5, 5, 0.75); 
+            min-height: 100vh;
             width: 100%;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            margin: 100px 20px 20px 20px;
-            box-sizing: border-box;
-            flex: 0 0 auto;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
 
-        h1 { font-weight: 700; margin-bottom: 10px; }
-        p { color: #888; margin-bottom: 30px; line-height: 1.5; }
-
-        .search-box { margin-bottom: 20px; }
-        input[type="text"] {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 15px;
-            background: #000;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--accent-color);
-            font-family: monospace;
-            font-size: 14px;
-            outline: none;
-            transition: 0.2s;
-        }
-        input[type="text"]:focus { border-color: var(--accent-color); }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background: var(--accent-color);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        button:hover { opacity: 0.9; }
-
-        /* RESULTS AREA */
-        #result-area {
-            margin-top: 25px;
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
             padding: 20px;
-            border-radius: 8px;
-            background: rgba(0,0,0,0.3);
-            display: none; /* Hidden by default */
-            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
         }
-        .status-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .label { color: #888; font-size: 12px; }
-        .value { color: #fff; font-family: monospace; font-size: 14px; }
-        .verified-badge {
-            color: var(--bg-color);
-            background: var(--success-color);
+
+        /* --- HERO SECTION --- */
+        .hero {
             text-align: center;
-            padding: 5px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-bottom: 15px;
+            padding: 100px 20px 60px 20px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(var(--accent-rgb), 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* --- PITCH SECTION --- */
+        .pitch-section {
+            padding: 60px 0;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            margin: 0;
+            display: block;
+        }
+
+        .pitch-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .pitch-text {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        .pitch-text strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* --- INSTRUCTION CARDS --- */
+        .instructions-section {
+            padding: 80px 20px;
+            width: 100%;
+            margin: 0;
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .instruction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .instruction-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 60px rgba(var(--accent-rgb), 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .instruction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 80px rgba(var(--accent-rgb), 0.25);
+        }
+
+        .instruction-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .instruction-label {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* --- CALL TO ACTION --- */
+        .cta-section {
+            padding: 80px 20px;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            margin: 0;
+            display: block;
+        }
+
+        .cta-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
-        /* Truncate long hashes visually */
-        .hash-display {
-            max-width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.6;
         }
 
-        .home-link {
-            display: flex; align-items: center; justify-content: center;
-            gap: 12px; margin-top: 30px; text-decoration: none; color: #666; font-size: 14px;
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-        .home-link:hover { color: var(--accent-color); }
-        .home-link img { width: 32px; filter: grayscale(100%); transition: 0.2s; }
-        .home-link:hover img { filter: grayscale(0%); }
 
-        /* Footer link hover states */
+        .btn {
+            padding: 18px 45px;
+            background-color: var(--accent);
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #33b8ff;
+            box-shadow: 0 0 50px rgba(var(--accent-rgb), 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #fff;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
         footer a:hover {
             color: #00D26A !important;
         }
 
-        footer {
-            margin-top: auto;
-            width: 100%;
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .pitch-text {
+                font-size: 1rem;
+            }
+
+            .instruction-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+
+            .btn {
+                width: 100%;
+                display: block;
+                margin-bottom: 15px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
@@ -1467,256 +1996,81 @@ total 27152
             <a href="index.html">Home</a>
             <a href="verify.html">Verify</a>
             <a href="decrypt.html">Decrypt</a>
+            <a href="support.html">Support</a>
         </div>
     </nav>
 
-    <div class="verify-container">
-        <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
-        
-        <h1>Verify Certificate</h1>
-        <p>Enter your Asset Hash or Transaction ID.</p>
+    <div class="overlay">
 
-        <div class="search-box">
-            <input type="text" id="hashInput" placeholder="Paste Hash (e.g. 0x123...)" />
-        </div>
+        <!-- Hero Section -->
+        <section class="hero container">
+            <h1 class="hero-title">Secure Asset Received</h1>
+            <p class="hero-subtitle">
+                You have received a secured, forensic-grade asset protected by ProofLock Courier.
+            </p>
+        </section>
 
-        <button onclick="handleVerify()" id="verifyBtn">Verify Integrity</button>
+        <!-- Pitch Section -->
+        <section class="pitch-section">
+            <div class="pitch-content">
+                <p class="pitch-text">
+                    This file is locked with <strong>Identity-Decoupled Encryption</strong>. 
+                    To verify its chain of custody and decrypt it, you must use the <strong>ProofLock App</strong>. 
+                    This ensures <strong>Chain of Custody</strong>—mathematical proof that the file you receive is 
+                    identical to the file that was sent, with full auditability and tamper-proof verification.
+                </p>
+            </div>
+        </section>
 
-        <div id="result-area">
-            <div id="statusBadge" class="verified-badge">VERIFIED VALID</div>
-            
-            <div class="status-row">
-                <span class="label">ASSET NAME</span>
-                <span class="value" id="resName">Unknown</span>
+        <!-- Instructions Section -->
+        <section class="instructions-section">
+            <div class="container">
+                <h2 class="section-title">How to Open Your Secure Asset</h2>
+                <div class="instruction-grid">
+                    <div class="instruction-card">
+                        <img src="assets/GuideToUnlockingProof.png" alt="Guide to Unlocking Proof" loading="lazy">
+                        <div class="instruction-label">Verify & Decrypt</div>
+                    </div>
+                    <div class="instruction-card">
+                        <img src="assets/GuideToUnlockingCrypto.png" alt="Guide to Unlocking Crypto" loading="lazy">
+                        <div class="instruction-label">Secure Access</div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="status-row">
-                <span class="label">TIMESTAMP</span>
-                <span class="value" id="resTime">--</span>
-            </div>
-            
-            <div class="status-row">
-                <span class="label">BLOCKCHAIN TX</span>
-                <span class="value hash-display" id="resTx">--</span>
-            </div>
-            
-            <div class="status-row" style="border:none;">
-                <span class="label">STATUS</span>
-                <span class="value" id="resStatus" style="color:var(--accent-color);">CONFIRMED</span>
-            </div>
-        </div>
+        </section>
 
-        <a href="/" class="home-link">
-            <img src="assets/chip_icon.png" alt="ProofLock Home">
-            <span>Return to Home</span>
-        </a>
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2 class="cta-title">Get Started with ProofLock</h2>
+                <p class="cta-subtitle">
+                    Download the ProofLock App to unlock your secure asset and experience 
+                    forensic-grade digital certainty.
+                </p>
+                <div class="btn-group">
+                    <a href="#" class="btn">Download ProofLock</a>
+                    <a href="index.html" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div style="margin-bottom: 20px;">
+                <a href="index.html">Home</a>
+                <a href="verify.html">Verify Asset</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div style="color: #444; font-size: 12px;">
+                &copy; 2025 ProofLock LLC. Non-Custodial Security.<br>
+                Patent Pending.
+            </div>
+        </footer>
+
     </div>
 
-    <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto; width: 100%;">
-        <div style="margin-bottom: 20px;">
-            <a href="index.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Home</a>
-            <a href="verify.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Verify Asset</a>
-            <a href="privacy.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
-            <a href="terms.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
-        </div>
-        <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock Inc. Non-Custodial Security.<br>
-            Patent Pending.
-        </div>
-    </footer>
-
-    <script>
-        // --- CONFIGURATION ---
-        // PUBLIC READ ONLY CLIENT
-        const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlZnVkZXBwenJyc2lwd3pvcWNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI4MTUyNTQsImV4cCI6MjA3ODM5MTI1NH0.Lh5tQ5aEWb_7BSkJM_me9fRvBgahlBUqqslMXqgrtRQ';
-        
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // Auto-fill from URL params
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const hash = params.get('hash');
-            if (hash) {
-                document.getElementById('hashInput').value = hash;
-            }
-        });
-
-        async function handleVerify() {
-            const hash = document.getElementById('hashInput').value.trim();
-            const btn = document.getElementById('verifyBtn');
-            const resultArea = document.getElementById('result-area');
-            
-            if(!hash) return;
-
-            // UI Loading State
-            btn.innerText = "Scanning Ledger...";
-            btn.disabled = true;
-            resultArea.style.display = "none";
-
-            try {
-                // SMART QUERY:
-                // Check if the input matches 'asset_hash' (PK) OR 'transaction_hash'
-                const { data, error } = await supabase
-                    .from('proof_ledger')
-                    .select('asset_name, status, created_at, transaction_hash')
-                    .or(`asset_hash.eq.${hash},transaction_hash.eq.${hash}`)
-                    .single();
-
-                if (error || !data) {
-                    throw new Error("Record not found.");
-                }
-
-                // SUCCESS: Render Data
-                document.getElementById('statusBadge').innerText = "VERIFIED VALID";
-                document.getElementById('statusBadge').style.background = "var(--success-color)";
-                
-                document.getElementById('resName').innerText = data.asset_name || "Confidential Asset";
-                document.getElementById('resTime').innerText = new Date(data.created_at).toLocaleString();
-                document.getElementById('resTx').innerText = data.transaction_hash || "Pending on Chain";
-                document.getElementById('resStatus').innerText = (data.status || "Verified").toUpperCase();
-                
-                resultArea.style.display = "block";
-
-            } catch (err) {
-                // FAILURE: Show Error
-                console.error("Verification Error:", err);
-                
-                resultArea.style.display = "block";
-                document.getElementById('statusBadge').innerText = "VERIFICATION FAILED";
-                document.getElementById('statusBadge').style.background = "var(--fail-color)";
-                
-                document.getElementById('resName').innerText = "N/A";
-                document.getElementById('resTime').innerText = "Hash not found in ledger.";
-                document.getElementById('resTx').innerText = "--";
-                document.getElementById('resStatus').innerText = "INVALID";
-            } finally {
-                btn.innerText = "Verify Integrity";
-                btn.disabled = false;
-            }
-        }
-    </script>
 </body>
 </html>
-[END OF FILE: public/verify.html]
-
---------------------------------------------------
-[FILE]: supabase/functions/send-certificate/index.ts
---------------------------------------------------
-// Supabase Edge Function: send-certificate
-// Role: Secure Notification Dispatcher
-// Fixed: Strict Type-Guards to resolve 'any' linter errors.
-
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-
-// 1. Define the Expected Shape
-interface CertificateRequest {
-  email: string;
-  proof_hash: string;
-}
-
-// 2. Type Guard: The only way to safely handle unknown JSON
-function isValidRequest(data: unknown): data is CertificateRequest {
-  return (
-    typeof data === "object" &&
-    data !== null &&
-    "email" in data &&
-    "proof_hash" in data &&
-    typeof (data as CertificateRequest).email === "string" &&
-    typeof (data as CertificateRequest).proof_hash === "string"
-  );
-}
-
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
-
-const generateEmail = (hash: string): string => `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #121212; color: #E0E0E0; margin: 0; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; background-color: #1E1E1E; border-radius: 12px; padding: 40px; border: 1px solid #333; }
-        .logo { font-size: 24px; font-weight: 800; margin-bottom: 20px; color: white; letter-spacing: -1px; }
-        .logo span { color: #00D26A; }
-        h1 { color: white; font-size: 22px; margin-bottom: 15px; }
-        p { color: #A0A0A0; line-height: 1.6; margin-bottom: 25px; }
-        .button { display: inline-block; background-color: #00D26A; color: #000; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 14px; letter-spacing: 0.5px; }
-        .footer { margin-top: 30px; font-size: 12px; color: #444; text-align: center; border-top: 1px solid #333; padding-top: 20px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="logo">Proof<span>Lock</span></div>
-        <h1>Secure Asset Received</h1>
-        <p>You have received a mathematically secured file. Before decryption, you must verify its chain of custody on the public ledger.</p>
-        <a href="https://prooflock.io/verify.html?hash=${hash}" class="button">Verify & Decrypt Asset</a>
-        <p style="font-size: 13px; margin-top: 25px;">
-            <strong>Asset Hash:</strong><br>
-            <span style="font-family: monospace; color: #666;">${hash}</span>
-        </p>
-        <div class="footer">
-            &copy; 2025 ProofLock Inc. | Non-Custodial Security
-        </div>
-    </div>
-</body>
-</html>
-`
-
-serve(async (req: Request): Promise<Response> => {
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: CORS_HEADERS })
-  }
-
-  try {
-    // 3. Receive as 'unknown' first (Satisfies Linter)
-    const jsonData: unknown = await req.json();
-
-    // 4. Validate before destructuring
-    if (!isValidRequest(jsonData)) {
-      throw new Error("Invalid request body. Expected { email, proof_hash }");
-    }
-
-    // Now safe to use
-    const { email, proof_hash } = jsonData;
-
-    // Log it to ensure 'email' is used (Satisfies 'unused variable' Linter)
-    console.log(`Processing certificate for: ${email}`);
-
-    return new Response(JSON.stringify({ 
-      message: "Certificate email generated successfully",
-      htmlContent: generateEmail(proof_hash) 
-    }), {
-      headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-      status: 200,
-    })
-
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-    
-    return new Response(JSON.stringify({ error: errorMessage }), {
-      headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
-})
-[END OF FILE: supabase/functions/send-certificate/index.ts]
-
---------------------------------------------------
-[FILE]: supabase/functions/send-certificate/types.d.ts
---------------------------------------------------
-// Type declarations for Deno runtime globals
-// Note: Request and Response are available as global values in Deno runtime
-
-declare module "https://deno.land/std@0.168.0/http/server.ts" {
-  export function serve(
-    handler: (req: Request) => Response | Promise<Response>
-  ): void;
-}
-
-
-[END OF FILE: supabase/functions/send-certificate/types.d.ts]
-
+[END OF FILE: public/decrypt.html]
