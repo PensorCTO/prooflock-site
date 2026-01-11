@@ -21,7 +21,6 @@
             padding: 0;
             padding-top: 80px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* IMAGE PATH FIXED */
             background: url('assets/background_art.jpg') no-repeat center center fixed;
             background-size: cover;
             color: var(--text-color);
@@ -229,9 +228,7 @@
 
     <script>
         const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
-        // IMPORTANT: This must be the anon/public key (not service_role key)
-        // Standard Supabase anon keys are JWT tokens (start with "eyJ") or base64-like strings
-        // Verify in Supabase Dashboard: Settings > API > Project API keys > anon/public
+        // CORRECTED KEY: Standard Supabase anon keys are JWT tokens (start with "eyJ")
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlZnVkZXBwenJyc2lwd3pvcWNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI4MTUyNTQsImV4cCI6MjA3ODM5MTI1NH0.Lh5tQ5aEWb_7BSkJM_me9fRvBgahlBUqqslMXqgrtRQ';
         
         let supabaseClient;
