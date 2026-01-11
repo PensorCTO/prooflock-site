@@ -11,7 +11,7 @@
             --accent-rgb: 0, 210, 106;
             --text-main: #ffffff;
             --text-muted: #cccccc;
-            --panel-bg: rgba(5, 5, 5, 0.95); /* Nearly Opaque for readability */
+            --panel-bg: rgba(5, 5, 5, 0.95);
             --panel-border: 1px solid rgba(255, 255, 255, 0.15);
             --danger: #ff4444;
             --input-bg: #000000;
@@ -74,7 +74,7 @@
         /* --- THE OPAQUE PANEL (Command Console) --- */
         .command-console {
             background: var(--panel-bg);
-            border: 2px solid #00a855; /* Thin dark green edge */
+            border: 2px solid #00a855;
             border-radius: 16px;
             padding: 25px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
@@ -128,7 +128,7 @@
         textarea {
             width: 100%;
             box-sizing: border-box;
-            background: #1a1a1a; /* Lighter shade of grey to pop out */
+            background: #1a1a1a;
             border: 1px solid #333;
             border-radius: 8px;
             padding: 15px;
@@ -166,7 +166,8 @@
             box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.4);
         }
         .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-            /* --- SCROLLABLE HISTORY BOX --- */
+        
+        /* --- SCROLLABLE HISTORY BOX --- */
         .history-label {
             margin-top: 30px;
             margin-bottom: 10px;
@@ -184,9 +185,8 @@
             border: 1px solid #333;
             border-radius: 8px;
             height: 400px; /* Fixed Height */
-            overflow-y: auto; /* Scrollable */
+            overflow-y: auto;
             padding: 15px;
-            /* Inner Shadow for depth */
             box-shadow: inset 0 0 20px rgba(0,0,0,0.8); 
         }
 
@@ -323,79 +323,37 @@
             <a href="support.html" style="color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; transition: color 0.2s;">Support</a>
         </div>
         <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock LLC. Non-Custodial Security.
+            &copy; 2025 ProofLock LLC. (v2.0)
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // --- 1. CONFIGURATION ---
-        const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
-        const SUPABASE_KEY = 'YOUR_ANON_KEY';
+        // --- 1. CONFIGURATION (FIXED) ---
+        const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_876h9RnxuswzMrLWVY-baw_K4XZUWaR';
         
-        // Initialize Supabase client - wait for library to load
-        // Use a function to initialize when ready to avoid conflicts
-        let supabaseClient = null;
+        let supabaseClient;
         
-        function initSupabase() {
-            try {
-                // The Supabase CDN exposes it as window.supabase
-                if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
-                    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                    return supabaseClient;
-                }
-                return null;
-            } catch (e) {
-                console.error('Error initializing Supabase:', e);
-                return null;
+        // --- 2. INITIALIZATION (STANDARDIZED) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("ProofLock Support v2.0 Loaded");
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
             }
-        }
-        
-        // Initialize immediately - script should be loaded by now
-        // Use a small delay to ensure the Supabase library is fully loaded
-        (function() {
-            function attemptInit() {
-                supabaseClient = initSupabase();
-                if (!supabaseClient) {
-                    // Retry after a short delay if not loaded yet
-                    setTimeout(attemptInit, 100);
-                }
-            }
-            attemptInit();
-        })();
-        
-        // Create a proxy to avoid naming conflicts with global supabase
-        // This allows us to use 'supabase' as if it were the client
-        const supabase = new Proxy({}, {
-            get: function(target, prop) {
-                // Try to initialize if not already done
-                if (!supabaseClient) {
-                    supabaseClient = initSupabase();
-                }
-                if (!supabaseClient) {
-                    console.error('Supabase client not initialized yet');
-                    // Return a no-op function for methods to prevent errors
-                    return function() { 
-                        console.error('Supabase not loaded'); 
-                        return Promise.reject(new Error('Supabase not initialized'));
-                    };
-                }
-                const value = supabaseClient[prop];
-                if (typeof value === 'function') {
-                    return value.bind(supabaseClient);
-                }
-                return value;
-            }
+            
+            // Initialization Logic moved here to ensure library is loaded
+            initUI();
         });
 
-        // --- 2. STATE ---
+        // --- 3. STATE ---
         const urlParams = new URLSearchParams(window.location.search);
         const myUuid = urlParams.get('uid'); 
         let currentMode = 'bug'; 
 
-        // --- 3. INITIALIZATION ---
-        // Use event delegation for reliable toggle handling
-        document.addEventListener('DOMContentLoaded', function() {
+        // --- 4. UI INIT ---
+        function initUI() {
+            // Event Listeners for Toggles
             const typeToggle = document.querySelector('.type-toggle');
             if (typeToggle) {
                 typeToggle.addEventListener('click', function(e) {
@@ -407,11 +365,9 @@
                     }
                 });
             }
-        });
-        
-        window.onload = function() {
+
+            // Mode Logic
             const btnIssue = document.getElementById('btn-issue');
-            
             if (!myUuid) {
                 document.getElementById('guest-warning').style.display = 'block';
                 setMode('feature');
@@ -419,65 +375,46 @@
                     btnIssue.classList.add('disabled');
                 }
             } else {
-                setMode('bug'); // Ensure UI is properly initialized for authenticated users
+                setMode('bug'); 
                 fetchTickets();
             }
-        };
+        }
 
-        // --- 4. TOGGLE LOGIC ---
+        // --- 5. TOGGLE LOGIC ---
         function setMode(mode) {
-            // Prevent mode change if issue mode is disabled for guests
-            if (mode === 'bug' && !myUuid) {
-                return false;
-            }
+            if (mode === 'bug' && !myUuid) return false;
             
             currentMode = mode;
             
-            // Clear all active classes
             document.querySelectorAll('.toggle-opt').forEach(el => {
                 el.classList.remove('active');
             });
             
-            // Apply active class and update UI based on mode
             if (mode === 'bug') {
                 const btnIssue = document.getElementById('btn-issue');
                 if (btnIssue) {
                     btnIssue.classList.add('active');
                     btnIssue.classList.remove('disabled');
                 }
-                const msgInput = document.getElementById('message-input');
-                if (msgInput) {
-                    msgInput.placeholder = "Describe the issue... (Device model, iOS version, what happened?)";
-                }
-                const submitBtn = document.getElementById('submit-btn');
-                if (submitBtn) {
-                    submitBtn.innerText = "Submit Private Report";
-                }
+                document.getElementById('message-input').placeholder = "Describe the issue... (Device model, iOS version, what happened?)";
+                document.getElementById('submit-btn').innerText = "Submit Private Report";
             } else {
-                const btnFeature = document.getElementById('btn-feature');
-                if (btnFeature) {
-                    btnFeature.classList.add('active');
-                }
-                const msgInput = document.getElementById('message-input');
-                if (msgInput) {
-                    msgInput.placeholder = "Have an idea? Tell us how we can make ProofLock better for you...";
-                }
-                const submitBtn = document.getElementById('submit-btn');
-                if (submitBtn) {
-                    submitBtn.innerText = "Post to Public Board";
-                }
+                document.getElementById('btn-feature').classList.add('active');
+                document.getElementById('message-input').placeholder = "Have an idea? Tell us how we can make ProofLock better for you...";
+                document.getElementById('submit-btn').innerText = "Post to Public Board";
             }
-            
             return true;
         }
 
-        // --- 5. FETCH LOGIC (SECURE RPC) ---
+        // --- 6. FETCH LOGIC ---
         async function fetchTickets() {
+            if (!supabaseClient) return;
+
             const listEl = document.getElementById('ticket-list');
             const statusEl = document.getElementById('history-status');
             const lookupId = myUuid || '00000000-0000-0000-0000-000000000000'; 
 
-            const { data, error } = await supabase.rpc('get_filtered_tickets', { lookup_uuid: lookupId });
+            const { data, error } = await supabaseClient.rpc('get_filtered_tickets', { lookup_uuid: lookupId });
 
             if (error) {
                 console.error(error);
@@ -501,7 +438,6 @@
                         <span class="ticket-date">${new Date(ticket.created_at).toLocaleDateString()} • ${ticket.type.toUpperCase()}</span>
                     </div>
                     <div class="ticket-msg">${escapeHtml(ticket.message)}</div>
-                    
                     ${ticket.admin_reply ? `
                         <div class="admin-reply">
                             <div class="reply-avatar">PL</div>
@@ -515,8 +451,10 @@
             `).join('');
         }
 
-        // --- 6. SUBMIT LOGIC ---
+        // --- 7. SUBMIT LOGIC ---
         async function submitTicket() {
+            if (!supabaseClient) return;
+
             const msg = document.getElementById('message-input').value.trim();
             const btn = document.getElementById('submit-btn');
 
@@ -528,7 +466,7 @@
 
             const submissionUuid = myUuid || crypto.randomUUID();
 
-            const { error } = await supabase.from('customer_service').insert({
+            const { error } = await supabaseClient.from('customer_service').insert({
                 user_uuid: submissionUuid,
                 type: currentMode,
                 message: msg,
