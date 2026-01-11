@@ -97,7 +97,7 @@
         let supabaseClient;
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("ProofLock Verify v2.2 Loaded"); 
+            console.log("ProofLock Verify v2.3 Loaded"); 
             
             if (window.supabase) {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -125,13 +125,30 @@
 
             try {
                 console.log('[Verify] Hash:', hash);
-                // CRITICAL FIX V2.2: Swapped Double Quotes (") for Single Quotes (')
-                // PostgREST requires single quotes for string values.
-                const { data, error } = await supabaseClient
+
+                // STRATEGY v2.3: Sequential Check
+                // This completely bypasses the .or() raw string parser issues.
+                // It uses standard .eq() which is type-safe and handles hashes starting with numbers automatically.
+                
+                // 1. Check Asset Hash first
+                let { data, error } = await supabaseClient
                     .from('proof_ledger')
                     .select('asset_name, created_at, transaction_hash')
-                    .or(`asset_hash.ieq.'${hash}',transaction_hash.ieq.'${hash}'`)
+                    .eq('asset_hash', hash) // Safe method
                     .maybeSingle();
+
+                // 2. If not found (and no error), check Transaction Hash
+                if (!data && !error) {
+                    console.log('[Verify] Asset Hash miss. Checking Transaction Hash...');
+                    const txResult = await supabaseClient
+                        .from('proof_ledger')
+                        .select('asset_name, created_at, transaction_hash')
+                        .eq('transaction_hash', hash) // Safe method
+                        .maybeSingle();
+                    
+                    data = txResult.data;
+                    error = txResult.error;
+                }
 
                 if (error) { throw error; }
 
@@ -175,7 +192,7 @@
             <a href="index.html">Home</a> <a href="verify.html">Verify</a> <a href="privacy.html">Privacy</a> <a href="terms.html">Terms</a> <a href="support.html">Support</a>
         </div>
         <div style="color: #444; font-size: 12px;">
-            &copy; 2025 ProofLock LLC. (v2.2) <br>
+            &copy; 2025 ProofLock LLC. (v2.3) <br>
             Patent Pending.
         </div>
     </footer>
