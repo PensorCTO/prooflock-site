@@ -56,7 +56,7 @@
 
         /* --- LAYOUT CONTAINER --- */
         .container {
-            max-width: 700px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
             width: 100%;
@@ -78,6 +78,42 @@
             border-radius: 16px;
             padding: 25px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            margin: 0 auto 30px;
+            max-width: 50%;
+        }
+
+        /* --- DASHBOARD GRID --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .dashboard-column {
+            background: var(--panel-bg);
+            border: var(--panel-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .dashboard-column h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        #public-features {
+            border: 1px dashed var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* --- TOGGLE SWITCH --- */
@@ -189,7 +225,7 @@
         
         /* --- HISTORY BOX --- */
         .history-label {
-            margin-top: 30px;
+            margin-top: 0;
             margin-bottom: 10px;
             font-size: 0.85rem;
             color: #888;
@@ -317,20 +353,41 @@
             </div>
             <button class="submit-btn" onclick="submitTicket()" id="submit-btn">Submit Ticket</button>
 
-            <div class="history-label">
-                <span>Ticket Log</span>
-                <span id="history-status" style="font-weight:normal; opacity:0.5;">Connecting...</span>
-            </div>
-            
-            <div class="history-window">
-                <div id="ticket-list">
-                    <div style="text-align: center; color: #444; padding-top: 150px;">
-                        Initializing Secure Link...
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-column">
+                <h3>My Secure Logs</h3>
+                <div class="history-label">
+                    <span>Private Tickets</span>
+                    <span id="my-tickets-status" style="font-weight:normal; opacity:0.5;">Connecting...</span>
+                </div>
+                <div class="history-window">
+                    <div id="my-tickets">
+                        <div style="text-align: center; color: #444; padding-top: 150px;">
+                            Initializing Secure Link...
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </div> </div>
+            <div class="dashboard-column" id="public-features">
+                <h3>Community Uplink</h3>
+                <div class="history-label">
+                    <span>Public Features</span>
+                    <span id="public-features-status" style="font-weight:normal; opacity:0.5;">Connecting...</span>
+                </div>
+                <div class="history-window">
+                    <div id="public-features-list">
+                        <div style="text-align: center; color: #444; padding-top: 150px;">
+                            Loading Community Board...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
 
     <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto;">
         <div style="margin-bottom: 20px;">
@@ -386,8 +443,10 @@
                 }
             } else {
                 setMode('bug'); 
-                fetchTickets();
             }
+            
+            // Always fetch both datasets on load
+            fetchTickets();
         }
 
         function setMode(mode) {
@@ -412,25 +471,41 @@
                 document.getElementById('message-input').placeholder = "Have an idea? Tell us how we can make ProofLock better for you...";
                 document.getElementById('submit-btn').innerText = "Post to Public Board";
             }
+            
             return true;
         }
 
         async function fetchTickets() {
             if (!supabaseClient) return;
 
-            const listEl = document.getElementById('ticket-list');
-            const statusEl = document.getElementById('history-status');
+            // Fetch Set A: Private tickets (My Secure Logs)
+            await fetchMyTickets();
+            
+            // Fetch Set B: Public features (Community Uplink)
+            await fetchPublicFeatures();
+        }
+
+        async function fetchMyTickets() {
+            const listEl = document.getElementById('my-tickets');
+            const statusEl = document.getElementById('my-tickets-status');
+            
+            if (!myUuid) {
+                listEl.innerHTML = `<div style="text-align: center; color: #444; padding-top: 150px;">Launch from App to view Private Logs.</div>`;
+                statusEl.innerText = "Requires App ID";
+                return;
+            }
+
             const lookupId = myUuid || '00000000-0000-0000-0000-000000000000'; 
-
-            const { data, error } = await supabaseClient.rpc('get_filtered_tickets', { lookup_uuid: lookupId });
-
-            if (error) {
-                console.error(error);
+            const result = await supabaseClient.rpc('get_filtered_tickets', { lookup_uuid: lookupId });
+            
+            if (result.error) {
+                console.error(result.error);
                 listEl.innerHTML = `<div style="color: var(--danger); text-align:center; padding-top: 150px;">Connection Error.</div>`;
                 statusEl.innerText = "Offline";
                 return;
             }
 
+            const data = result.data;
             statusEl.innerText = "Synced";
 
             if (!data || data.length === 0) {
@@ -448,6 +523,54 @@
                     <div class="ticket-msg">${escapeHtml(ticket.message)}</div>
                     ${ticket.admin_reply ? `
                         <div class="admin-reply">
+                            <div class="reply-avatar">PL</div>
+                            <div class="reply-body">
+                                <span class="reply-label">Architect Response</span>
+                                <div class="reply-text">${escapeHtml(ticket.admin_reply)}</div>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        async function fetchPublicFeatures() {
+            const listEl = document.getElementById('public-features-list');
+            const statusEl = document.getElementById('public-features-status');
+            
+            const result = await supabaseClient
+                .from('customer_service')
+                .select('*')
+                .eq('type', 'feature')
+                .eq('is_published', true)
+                .order('created_at', { ascending: false })
+                .limit(50);
+            
+            if (result.error) {
+                console.error(result.error);
+                listEl.innerHTML = `<div style="color: var(--danger); text-align:center; padding-top: 150px;">Connection Error.</div>`;
+                statusEl.innerText = "Offline";
+                return;
+            }
+
+            const data = result.data;
+            statusEl.innerText = "Synced";
+
+            if (!data || data.length === 0) {
+                listEl.innerHTML = `<div style="text-align: center; color: #444; padding-top: 150px;">No features yet. Be the first to suggest one!</div>`;
+                return;
+            }
+
+            listEl.innerHTML = data.map(ticket => `
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        <span class="status-badge status-${ticket.status}">${ticket.status}</span>
+                        <span class="ticket-date">${new Date(ticket.created_at).toLocaleDateString()} • ${ticket.type.toUpperCase()}</span>
+                    </div>
+                    ${ticket.subject ? `<div style="font-weight:bold; color:white; margin-bottom:5px;">${escapeHtml(ticket.subject)}</div>` : ''}
+                    <div class="ticket-msg">${escapeHtml(ticket.message)}</div>
+                    ${ticket.admin_reply ? `
+                        <div class="admin-reply" style="margin-top: 15px; padding: 15px; background: rgba(0, 210, 106, 0.1); border: 1px solid rgba(0, 210, 106, 0.3); border-radius: 8px;">
                             <div class="reply-avatar">PL</div>
                             <div class="reply-body">
                                 <span class="reply-label">Architect Response</span>
@@ -490,7 +613,14 @@
             } else {
                 document.getElementById('subject-input').value = "";
                 document.getElementById('message-input').value = "";
-                btn.innerText = "Sent ✅";
+                
+                if (currentMode === 'feature') {
+                    alert("Sent to Moderation Queue. Will appear in Community Uplink once approved.");
+                    btn.innerText = "Sent ✅";
+                } else {
+                    btn.innerText = "Sent ✅";
+                }
+                
                 setTimeout(() => { 
                     btn.disabled = false; 
                     setMode(currentMode); 

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProofLock Overwatch | Admin Console</title>
+    <style>
+        /* CYBER-UNIFORM 8.0: COMPACT & REFINED */
+        :root {
+            --accent: #00D26A;
+            --accent-rgb: 0, 210, 106;
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
+            --glass-bg: rgba(10, 10, 10, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        body {
+            padding-top: 80px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            background: url('assets/vault-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Overlay */
+        .overlay {
+            background-color: rgba(5, 5, 5, 0.75); 
+            min-height: 100vh;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Header Section */
+        .header-section {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header-title .accent {
+            color: var(--accent);
+        }
+
+        .master-key-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .master-key-input label {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .master-key-input input {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .master-key-input input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.2);
+        }
+
+        /* Two Column Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Column Styling */
+        .dashboard-column {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            min-height: 500px;
+        }
+
+        .column-header {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Load Queue Button */
+        .btn-load {
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-load:hover {
+            background-color: #00E673;
+            box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.4);
+        }
+
+        .btn-load:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Ticket List */
+        .ticket-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .ticket-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .ticket-list::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        .ticket-list::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        .ticket-list::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ticket Card */
+        .ticket-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+
+        .ticket-card:hover {
+            border-color: #333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+        }
+
+        .ticket-date {
+            color: #666;
+        }
+
+        .ticket-subject {
+            font-weight: bold;
+            color: white;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .ticket-msg {
+            color: #ddd;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            margin-bottom: 12px;
+        }
+
+        .ticket-type {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #222;
+            color: #888;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .admin-reply {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #333;
+        }
+
+        .reply-label {
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .reply-text {
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .ticket-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-action:hover {
+            background-color: #00E673;
+            box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.4);
+        }
+
+        .btn-action:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-reply {
+            background-color: #333;
+            color: white;
+        }
+
+        .btn-reply:hover {
+            background-color: #444;
+        }
+
+        .btn-hide {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .btn-hide:hover {
+            background-color: #ff6666;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #444;
+            padding: 60px 20px;
+            font-size: 0.95rem;
+        }
+
+        .loading-state {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 60px 20px;
+        }
+
+        /* Telemetry Bar */
+        .telemetry-bar {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .telemetry-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric-card {
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            color: white;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        .metric-value.loading {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        /* Error Panel */
+        .error-panel {
+            background: rgba(255, 68, 68, 0.1);
+            border: 2px solid #ff4444;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 4px 20px rgba(255, 68, 68, 0.3);
+        }
+
+        .error-panel-header {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #ff4444;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error-panel-header::before {
+            content: "⚠️";
+            font-size: 1.5rem;
+        }
+
+        .error-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .error-item {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid #ff6666;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .error-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .error-item-date {
+            color: #ffaaaa;
+        }
+
+        .error-item-subject {
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .error-item-message {
+            color: #ffcccc;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .error-empty {
+            text-align: center;
+            color: #ffaaaa;
+            padding: 20px;
+        }
+
+        /* Refined Dashboard Grid - Make Live Public Board smaller */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay">
+        <div class="container">
+            
+            <!-- Header with Title and Master Key -->
+            <div class="header-section">
+                <h1 class="header-title">Proof<span class="accent">Lock</span> Overwatch</h1>
+                <div class="master-key-input">
+                    <label for="master-key">Master Key:</label>
+                    <input type="password" id="master-key" placeholder="Enter master key..." />
+                </div>
+            </div>
+
+            <!-- Telemetry Bar -->
+            <div class="telemetry-bar">
+                <div class="metric-card">
+                    <div class="metric-label">Total Users</div>
+                    <div class="metric-value loading" id="metric-total-users">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Pending Approvals</div>
+                    <div class="metric-value loading" id="metric-pending-approvals">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Open Bugs</div>
+                    <div class="metric-value loading" id="metric-open-bugs">-</div>
+                </div>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="dashboard-grid">
+                
+                <!-- Incoming Queue Column (Left) -->
+                <div class="dashboard-column">
+                    <div class="column-header">
+                        <span>Incoming Queue</span>
+                        <button class="btn-load" id="load-queue-btn" onclick="loadQueue()">Load Queue</button>
+                    </div>
+                    <div class="ticket-list" id="incoming-queue">
+                        <div class="empty-state">Click "Load Queue" to fetch pending tickets</div>
+                    </div>
+                </div>
+
+                <!-- Live Public Board Column (Right) -->
+                <div class="dashboard-column">
+                    <div class="column-header">
+                        <span>Live Public Board</span>
+                    </div>
+                    <div class="ticket-list" id="public-board">
+                        <div class="loading-state">Loading published tickets...</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Error Panel -->
+            <div class="error-panel">
+                <div class="error-panel-header">Error Alerts</div>
+                <div class="error-list" id="error-list">
+                    <div class="error-empty">Loading error tickets...</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://fefudeppzrrsipwzoqcr.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_876h9RnxuswzMrLWVY-baw_K4XZUWaR';
+        
+        let supabaseClient;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("ProofLock Overwatch Console Loaded");
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            }
+            // Auto-load public board and metrics on page load
+            loadPublicBoard();
+            fetchMetrics();
+        });
+
+        // Load Incoming Queue using RPC admin_get_queue
+        async function loadQueue() {
+            if (!supabaseClient) {
+                alert('Supabase client not initialized');
+                return;
+            }
+
+            const masterKey = document.getElementById('master-key').value.trim();
+            
+            if (!masterKey) {
+                alert('Please enter Master Key first');
+                return;
+            }
+
+            const listEl = document.getElementById('incoming-queue');
+            const btn = document.getElementById('load-queue-btn');
+            
+            btn.disabled = true;
+            btn.innerText = 'Loading...';
+            listEl.innerHTML = '<div class="loading-state">Loading queue...</div>';
+
+            try {
+                const { data, error } = await supabaseClient.rpc('admin_get_queue', {
+                    admin_secret: masterKey
+                });
+
+                if (error) {
+                    console.error('Error fetching queue:', error);
+                    listEl.innerHTML = `<div class="empty-state">Error: ${error.message}</div>`;
+                    btn.disabled = false;
+                    btn.innerText = 'Load Queue';
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    listEl.innerHTML = `<div class="empty-state">No tickets in queue</div>`;
+                    btn.disabled = false;
+                    btn.innerText = 'Load Queue';
+                    return;
+                }
+
+                listEl.innerHTML = data.map(ticket => renderIncomingTicket(ticket)).join('');
+                btn.disabled = false;
+                btn.innerText = 'Load Queue';
+            } catch (err) {
+                console.error('Exception loading queue:', err);
+                listEl.innerHTML = `<div class="empty-state">Failed to load queue: ${err.message}</div>`;
+                btn.disabled = false;
+                btn.innerText = 'Load Queue';
+            }
+        }
+
+        // Load Public Board - fetch customer_service where is_published = true
+        async function loadPublicBoard() {
+            if (!supabaseClient) return;
+
+            const listEl = document.getElementById('public-board');
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('customer_service')
+                    .select('*')
+                    .eq('is_published', true)
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.error('Error fetching published tickets:', error);
+                    listEl.innerHTML = `<div class="empty-state">Error: ${error.message}</div>`;
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    listEl.innerHTML = `<div class="empty-state">No published tickets</div>`;
+                    return;
+                }
+
+                listEl.innerHTML = data.map(ticket => renderPublicTicket(ticket)).join('');
+            } catch (err) {
+                console.error('Exception loading public board:', err);
+                listEl.innerHTML = `<div class="empty-state">Failed to load tickets</div>`;
+            }
+        }
+
+        // Render ticket in Incoming Queue (with Approve and Reply buttons)
+        function renderIncomingTicket(ticket) {
+            const date = new Date(ticket.created_at).toLocaleDateString();
+            const time = new Date(ticket.created_at).toLocaleTimeString();
+            
+            return `
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        <span class="ticket-date">${date} ${time}</span>
+                    </div>
+                    ${ticket.type ? `<span class="ticket-type">${escapeHtml(ticket.type)}</span>` : ''}
+                    ${ticket.subject ? `<div class="ticket-subject">${escapeHtml(ticket.subject)}</div>` : ''}
+                    <div class="ticket-msg">${escapeHtml(ticket.message)}</div>
+                    ${ticket.admin_reply ? `
+                        <div class="admin-reply">
+                            <span class="reply-label">Admin Reply</span>
+                            <div class="reply-text">${escapeHtml(ticket.admin_reply)}</div>
+                        </div>
+                    ` : ''}
+                    <div class="ticket-actions">
+                        <button class="btn-action" onclick="approveTicket('${ticket.id}')">Approve</button>
+                        <button class="btn-action btn-reply" onclick="replyTicket('${ticket.id}')">Reply</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render ticket in Public Board (with Hide button)
+        function renderPublicTicket(ticket) {
+            const date = new Date(ticket.created_at).toLocaleDateString();
+            const time = new Date(ticket.created_at).toLocaleTimeString();
+            
+            return `
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        <span class="ticket-date">${date} ${time}</span>
+                    </div>
+                    ${ticket.type ? `<span class="ticket-type">${escapeHtml(ticket.type)}</span>` : ''}
+                    ${ticket.subject ? `<div class="ticket-subject">${escapeHtml(ticket.subject)}</div>` : ''}
+                    <div class="ticket-msg">${escapeHtml(ticket.message)}</div>
+                    ${ticket.admin_reply ? `
+                        <div class="admin-reply">
+                            <span class="reply-label">Admin Reply</span>
+                            <div class="reply-text">${escapeHtml(ticket.admin_reply)}</div>
+                        </div>
+                    ` : ''}
+                    <div class="ticket-actions">
+                        <button class="btn-action btn-hide" onclick="hideTicket('${ticket.id}')">Hide</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Approve ticket - calls admin_moderate_ticket(id, 'publish', key)
+        async function approveTicket(ticketId) {
+            const masterKey = document.getElementById('master-key').value.trim();
+            
+            if (!masterKey) {
+                alert('Please enter Master Key first');
+                return;
+            }
+
+            if (!supabaseClient) {
+                alert('Supabase client not initialized');
+                return;
+            }
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerText = 'Approving...';
+
+            try {
+                const { data, error } = await supabaseClient.rpc('admin_moderate_ticket', {
+                    target_id: ticketId,
+                    action_type: 'publish',
+                    admin_secret: masterKey
+                });
+
+                if (error) {
+                    alert('Error: ' + error.message);
+                    btn.disabled = false;
+                    btn.innerText = 'Approve';
+                } else {
+                    btn.innerText = 'Approved ✓';
+                    setTimeout(() => {
+                        loadQueue();
+                        loadPublicBoard();
+                    }, 500);
+                }
+            } catch (err) {
+                alert('Exception: ' + err.message);
+                btn.disabled = false;
+                btn.innerText = 'Approve';
+            }
+        }
+
+        // Reply to ticket - prompts for text, then calls admin_moderate_ticket(id, 'reply', key, text)
+        async function replyTicket(ticketId) {
+            const masterKey = document.getElementById('master-key').value.trim();
+            
+            if (!masterKey) {
+                alert('Please enter Master Key first');
+                return;
+            }
+
+            const replyText = prompt('Enter your reply:');
+            
+            if (!replyText || !replyText.trim()) {
+                return;
+            }
+
+            if (!supabaseClient) {
+                alert('Supabase client not initialized');
+                return;
+            }
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerText = 'Replying...';
+
+            try {
+                const { data, error } = await supabaseClient.rpc('admin_moderate_ticket', {
+                    target_id: ticketId,
+                    action_type: 'reply',
+                    admin_secret: masterKey,
+                    reply_text: replyText.trim()
+                });
+
+                if (error) {
+                    alert('Error: ' + error.message);
+                    btn.disabled = false;
+                    btn.innerText = 'Reply';
+                } else {
+                    btn.innerText = 'Replied ✓';
+                    setTimeout(() => {
+                        loadQueue();
+                        loadPublicBoard();
+                    }, 500);
+                }
+            } catch (err) {
+                alert('Exception: ' + err.message);
+                btn.disabled = false;
+                btn.innerText = 'Reply';
+            }
+        }
+
+        // Hide ticket - calls admin_moderate_ticket(id, 'hide', key)
+        async function hideTicket(ticketId) {
+            const masterKey = document.getElementById('master-key').value.trim();
+            
+            if (!masterKey) {
+                alert('Please enter Master Key first');
+                return;
+            }
+
+            if (!supabaseClient) {
+                alert('Supabase client not initialized');
+                return;
+            }
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerText = 'Hiding...';
+
+            try {
+                const { data, error } = await supabaseClient.rpc('admin_moderate_ticket', {
+                    target_id: ticketId,
+                    action_type: 'hide',
+                    admin_secret: masterKey
+                });
+
+                if (error) {
+                    alert('Error: ' + error.message);
+                    btn.disabled = false;
+                    btn.innerText = 'Hide';
+                } else {
+                    btn.innerText = 'Hidden ✓';
+                    setTimeout(() => {
+                        loadPublicBoard();
+                    }, 500);
+                }
+            } catch (err) {
+                alert('Exception: ' + err.message);
+                btn.disabled = false;
+                btn.innerText = 'Hide';
+            }
+        }
+
+        // Fetch Metrics - Total Users, Pending Approvals, Open Bugs
+        async function fetchMetrics() {
+            if (!supabaseClient) return;
+
+            try {
+                // Total Users - Count distinct user_uuid
+                const { data: usersData, error: usersError } = await supabaseClient
+                    .from('customer_service')
+                    .select('user_uuid');
+
+                let totalUsers = 0;
+                if (!usersError && usersData) {
+                    const uniqueUsers = new Set(usersData.map(item => item.user_uuid).filter(Boolean));
+                    totalUsers = uniqueUsers.size;
+                }
+                document.getElementById('metric-total-users').textContent = totalUsers;
+                document.getElementById('metric-total-users').classList.remove('loading');
+
+                // Pending Approvals - Count is_published=false AND type='feature'
+                const { count: pendingCount, error: pendingError } = await supabaseClient
+                    .from('customer_service')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('is_published', false)
+                    .eq('type', 'feature');
+
+                const pendingApprovals = pendingError ? 0 : (pendingCount || 0);
+                document.getElementById('metric-pending-approvals').textContent = pendingApprovals;
+                document.getElementById('metric-pending-approvals').classList.remove('loading');
+
+                // Open Bugs - Count status='open' AND type='bug'
+                const { count: bugsCount, error: bugsError } = await supabaseClient
+                    .from('customer_service')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('status', 'open')
+                    .eq('type', 'bug');
+
+                const openBugs = bugsError ? 0 : (bugsCount || 0);
+                document.getElementById('metric-open-bugs').textContent = openBugs;
+                document.getElementById('metric-open-bugs').classList.remove('loading');
+
+                // Load Error Panel - Fetch tickets where subject or message contains "Crash", "Error", or "Failed"
+                await loadErrorPanel();
+
+            } catch (err) {
+                console.error('Error fetching metrics:', err);
+                document.getElementById('metric-total-users').textContent = 'Error';
+                document.getElementById('metric-pending-approvals').textContent = 'Error';
+                document.getElementById('metric-open-bugs').textContent = 'Error';
+            }
+        }
+
+        // Load Error Panel - Fetch tickets with Crash/Error/Failed
+        async function loadErrorPanel() {
+            if (!supabaseClient) return;
+
+            const errorListEl = document.getElementById('error-list');
+
+            try {
+                // Fetch all tickets and filter client-side (since Supabase text search might not support OR conditions easily)
+                const { data, error } = await supabaseClient
+                    .from('customer_service')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.error('Error fetching error tickets:', error);
+                    errorListEl.innerHTML = `<div class="error-empty">Error loading tickets: ${error.message}</div>`;
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    errorListEl.innerHTML = `<div class="error-empty">No error tickets found</div>`;
+                    return;
+                }
+
+                // Filter tickets where subject or message contains "Crash", "Error", or "Failed"
+                const errorKeywords = ['crash', 'error', 'failed'];
+                const errorTickets = data.filter(ticket => {
+                    const subject = (ticket.subject || '').toLowerCase();
+                    const message = (ticket.message || '').toLowerCase();
+                    return errorKeywords.some(keyword => 
+                        subject.includes(keyword) || message.includes(keyword)
+                    );
+                });
+
+                if (errorTickets.length === 0) {
+                    errorListEl.innerHTML = `<div class="error-empty">No error tickets found</div>`;
+                    return;
+                }
+
+                errorListEl.innerHTML = errorTickets.map(ticket => renderErrorTicket(ticket)).join('');
+
+            } catch (err) {
+                console.error('Exception loading error panel:', err);
+                errorListEl.innerHTML = `<div class="error-empty">Failed to load error tickets</div>`;
+            }
+        }
+
+        // Render error ticket in Error Panel
+        function renderErrorTicket(ticket) {
+            const date = new Date(ticket.created_at).toLocaleDateString();
+            const time = new Date(ticket.created_at).toLocaleTimeString();
+            const subject = ticket.subject || 'No Subject';
+            const message = ticket.message || 'No message';
+            
+            return `
+                <div class="error-item">
+                    <div class="error-item-header">
+                        <span class="error-item-date">${date} ${time}</span>
+                        ${ticket.type ? `<span class="ticket-type">${escapeHtml(ticket.type)}</span>` : ''}
+                    </div>
+                    <div class="error-item-subject">${escapeHtml(subject)}</div>
+                    <div class="error-item-message">${escapeHtml(message)}</div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
