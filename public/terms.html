@@ -10,7 +10,9 @@
         .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
         h1 { color: white; font-size: 2.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 30px; }
         h2 { color: white; margin-top: 40px; font-size: 1.5rem; }
-        p { color: #aaa; font-size: 1rem; margin-bottom: 15px; }
+        p, li { color: #aaa; font-size: 1rem; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+        ul { margin-bottom: 20px; padding-left: 24px; }
 
         /* GLOBAL NAVIGATION */
         .global-nav {
@@ -48,10 +50,6 @@
             gap: 30px;
             align-items: center;
             margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         .nav-links a {
@@ -101,19 +99,73 @@
         <p><strong>Effective Date:</strong> December 2025</p>
 
         <h2>1. Acceptance of Terms</h2>
-        <p>By downloading or using the ProofLock application, you agree to these terms. If you do not agree, you must uninstall the application immediately.</p>
+        <p>By using ProofLock, you agree to these Terms of Service. ProofLock provides cryptographic services for digital notarization, encryption, and decentralized identity management. You acknowledge that these services operate on Zero-Knowledge principles and decentralized blockchain technology.</p>
 
-        <h2>2. No Warranty</h2>
-        <p>ProofLock is provided "as is" without warranty of any kind. While we use military-grade encryption standards, we cannot guarantee absolute immunity from all future security threats or user error.</p>
+        <h2>2. Digital Certainty Definition</h2>
+        <p>ProofLock provides "Digital Certainty" through three interconnected pillars:</p>
+        <ul>
+            <li><strong>Integrity:</strong> Cryptographic proof that a file has not been altered since notarization (SHA-256 hashing).</li>
+            <li><strong>Ownership:</strong> Mathematical proof of file association with your wallet identity (digital signatures).</li>
+            <li><strong>Timestamping:</strong> Immutable timestamp anchor on the Polygon blockchain network.</li>
+        </ul>
+        <p>Together, these create a Certificate of Authenticity that proves the digital state of a file at a specific point in time, anchored to the Polygon network.</p>
 
-        <h2>3. User Responsibility</h2>
-        <p>You are solely responsible for safeguarding your private keys and passcodes. ProofLock LLC assumes no liability for data loss resulting from forgotten passwords or lost devices.</p>
+        <h2>3. The Immutable Monolith</h2>
+        <p>You acknowledge that the Polygon blockchain ledger is permanent and immutable. Once a cryptographic fingerprint is anchored to the blockchain, it exists forever. We cannot delete, edit, or modify any blockchain records. All notarizations are permanent and irreversible.</p>
 
-        <h2>4. Immutable Blockchain Records</h2>
-        <p>You acknowledge that data written to the blockchain is permanent and cannot be deleted or edited by ProofLock LLC.</p>
+        <h2>4. Your Responsibility (The Bridge)</h2>
+        <p>A verification requires two things that YOU control:</p>
+        <ul>
+            <li><strong>The Artifact:</strong> The exact, unaltered file that matches the cryptographic hash.</li>
+            <li><strong>The Identity:</strong> The Wallet/Email credentials used to sign and anchor the proof.</li>
+        </ul>
+        <p>If either component is lost or altered, the verification link is broken and cannot be restored by ProofLock.</p>
 
-        <h2>5. Governing Law</h2>
-        <p>These terms shall be governed by the laws of the State of Delaware, without regard to its conflict of law provisions.</p>
+        <h2>5. No-Recovery Rule</h2>
+        <p><strong>CRITICAL:</strong> Because we operate on Zero-Knowledge principles and do not store your encryption keys, wallet credentials, or password hashes, we CANNOT:</p>
+        <ul>
+            <li>Reset your password or recover your account.</li>
+            <li>Restore your encrypted files or vault contents.</li>
+            <li>Recover your wallet keys or private keys.</li>
+            <li>Assist with account access if you lose your authentication credentials.</li>
+        </ul>
+        <p>Your wallet keys are stored exclusively on your device using secure storage (iOS Keychain/Secure Enclave, Android Keystore). We do not have access to these keys and cannot assist with recovery. You are solely responsible for maintaining secure access to your account and backing up your encrypted vault files.</p>
+
+        <h2>6. Loss of Link</h2>
+        <p>If you lose the original file or access to your email/wallet credentials, the link to the blockchain record is permanently broken. ProofLock cannot restore it. The blockchain record remains immutable, but without both the file and your credentials, verification is impossible.</p>
+
+        <h2>7. Best Practice - Backup Encrypted Assets</h2>
+        <p>To guarantee verification, we strongly recommend backing up the encrypted version from your Vault. Storing raw decrypted files allows operating system metadata changes that can permanently break the cryptographic match. Always back up your encrypted vault files, not the original unencrypted files, to maintain cryptographic integrity.</p>
+
+        <h2>8. Courier Delivery System Disclaimer</h2>
+        <p>ProofLock may include features for secure file delivery using encrypted packages (Courier Delivery System). These packages are designed with self-destruct mechanisms and access limitations:</p>
+        <ul>
+            <li>Packages may have limited access attempts before permanent destruction.</li>
+            <li>We are not responsible for packages that self-destruct after failed access attempts.</li>
+            <li>Package recipients are responsible for maintaining access credentials.</li>
+            <li>We cannot recover or restore packages that have been permanently destroyed.</li>
+            <li>Delivery failures, corruption, or unauthorized access are not the responsibility of ProofLock.</li>
+        </ul>
+        <p>Use of the Courier Delivery System is at your own risk.</p>
+
+        <h2>9. Limitation of Liability</h2>
+        <p>The Certificate of Authenticity provided by ProofLock is a mathematical proof of digital state at a specific point in time, not a guarantee of physical truth, authenticity of content, or legal validity:</p>
+        <ul>
+            <li>ProofLock proves that a specific digital file existed in an exact state at a specific time.</li>
+            <li>ProofLock does NOT verify the truth, accuracy, or authenticity of the content within files.</li>
+            <li>ProofLock does NOT provide legal validation or notarization services.</li>
+            <li>ProofLock is NOT responsible for disputes arising from file contents or metadata.</li>
+        </ul>
+        <p>You acknowledge that cryptographic proof of digital state does not equate to proof of content authenticity, legal validity, or physical truth. Use of ProofLock services is at your own risk.</p>
+
+        <h2>10. Service Availability</h2>
+        <p>ProofLock services are provided "as is" without warranties of any kind. We do not guarantee uninterrupted service, and we are not responsible for:</p>
+        <ul>
+            <li>Blockchain network outages or congestion affecting transaction processing.</li>
+            <li>Device failures or loss of locally stored data.</li>
+            <li>Third-party service interruptions (authentication providers, blockchain networks).</li>
+            <li>Data loss resulting from device failure, loss, or unauthorized access.</li>
+        </ul>
     </div>
 
     <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid #222; margin-top: auto;">
